@@ -47,6 +47,35 @@
     initTheme();
     initDayObserver(days);
     initStickyOffsets();
+    hydrateWeather(days);
+  }
+
+  /* ---------- Weather (Open-Meteo, progressive enhancement) ---------- */
+
+  /**
+   * Swap each day's static weather for live data once it arrives. Days keep
+   * whatever itinerary.js declared until then, so a slow or failed request
+   * simply leaves the fallback on screen.
+   */
+  function hydrateWeather(days) {
+    if (!window.Weather) return;
+    const locations = window.LOCATIONS_DATA || {};
+
+    days.forEach(function (day) {
+      const location = day.locationId ? locations[day.locationId] : null;
+      if (!location) return;
+
+      window.Weather.getWeatherForDay(location, day.date).then(function (weather) {
+        if (!weather) return;
+        const current = document.querySelector('[data-weather-for="' + day.id + '"]');
+        if (!current) return;
+        const fresh = C.renderWeather(weather, {
+          dayId: day.id,
+          locationName: location.name
+        });
+        if (fresh) current.replaceWith(fresh);
+      });
+    });
   }
 
   /* ---------- Sticky header offsets ---------- */

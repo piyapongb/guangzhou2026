@@ -210,9 +210,17 @@
 
   /* ---------- Weather ---------- */
 
-  function renderWeather(weather) {
+  /**
+   * options: { dayId, locationName }
+   * `weather.source` ("forecast" | "average") is set by weather.js when the
+   * card is refreshed from Open-Meteo; static data from itinerary.js has no
+   * source and renders without a provenance note.
+   */
+  function renderWeather(weather, options) {
     if (!weather) return null;
+    const opts = options || {};
     const card = U.el("div", { class: "weather-card" });
+    if (opts.dayId) card.setAttribute("data-weather-for", opts.dayId);
     card.appendChild(
       U.el("div", { class: "weather-headline" }, [
         U.icon("weather", "weather-icon"),
@@ -234,6 +242,16 @@
       });
       card.appendChild(chipRow);
     }
+
+    if (weather.source) {
+      const label = weather.source === "forecast" ? "Live forecast" : "Typical for this date";
+      card.appendChild(
+        U.el("p", { class: "weather-source" }, [
+          opts.locationName ? label + " · " + opts.locationName : label
+        ])
+      );
+    }
+
     return card;
   }
 
@@ -569,7 +587,7 @@
       ])
     );
 
-    const weather = renderWeather(day.weather);
+    const weather = renderWeather(day.weather, { dayId: day.id });
     if (weather) section.appendChild(weather);
 
     const list = U.el("ol", { class: "timeline" });

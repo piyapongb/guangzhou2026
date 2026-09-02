@@ -14,6 +14,7 @@ window.ITINERARY_DATA = [
     id: "day-1",
     dayNumber: 1,
     date: "2026-10-22",
+    locationId: "guangzhou",
     weather: {
       forecast: "Partly cloudy",
       temperature: "24–29°C",
@@ -85,6 +86,7 @@ window.ITINERARY_DATA = [
     id: "day-2",
     dayNumber: 2,
     date: "2026-10-23",
+    locationId: "guangzhou",
     weather: {
       forecast: "Sunny",
       temperature: "25–31°C",
@@ -191,6 +193,7 @@ window.ITINERARY_DATA = [
     id: "day-3",
     dayNumber: 3,
     date: "2026-10-24",
+    locationId: "guangzhou",
     weather: {
       forecast: "Light rain",
       temperature: "23–27°C",
@@ -272,6 +275,7 @@ window.ITINERARY_DATA = [
     id: "day-4",
     dayNumber: 4,
     date: "2026-10-25",
+    locationId: "guangzhou",
     weather: {
       forecast: "Sunny",
       temperature: "24–30°C",
@@ -311,6 +315,7 @@ window.ITINERARY_DATA = [
     id: "day-5",
     dayNumber: 5,
     date: "2026-10-26",
+    locationId: "guangzhou",
     weather: {
       forecast: "Partly cloudy",
       temperature: "23–28°C",

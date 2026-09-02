@@ -459,6 +459,12 @@ html { scroll-behavior: smooth; }
   border-radius: var(--radius-pill);
 }
 
+.weather-source {
+  margin-top: var(--space-2);
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
 /* ---------- Day section & Timeline ---------- */
 
 .day-section {
@@ -799,7 +805,7 @@ button.timeline-media:focus-visible img { transform: scale(1.08); }
   justify-content: center;
   color: var(--color-primary);
 }
-.flight-route-icon { width: 16px; height: 16px; transform: rotate(-45deg); }
+.flight-route-icon { width: 16px; height: 16px; transform: rotate(90deg); }
 
 .flight-price {
   margin-top: var(--space-3);
