@@ -210,6 +210,58 @@
 
   /* ---------- Weather ---------- */
 
+  /* WMO weather code -> icon name. Ranges follow the Open-Meteo table. */
+  const WEATHER_ICON_BY_CODE = {
+    0: "sun", 1: "weather-partly", 2: "weather-partly", 3: "weather-cloud",
+    45: "weather-fog", 48: "weather-fog",
+    51: "weather-drizzle", 53: "weather-drizzle", 55: "weather-drizzle",
+    56: "weather-drizzle", 57: "weather-drizzle",
+    61: "weather-rain", 63: "weather-rain", 65: "weather-rain",
+    66: "weather-rain", 67: "weather-rain",
+    80: "weather-rain", 81: "weather-rain", 82: "weather-rain",
+    71: "weather-snow", 73: "weather-snow", 75: "weather-snow",
+    77: "weather-snow", 85: "weather-snow", 86: "weather-snow",
+    95: "weather-storm", 96: "weather-storm", 99: "weather-storm"
+  };
+
+  /* Keyword fallback for static entries in itinerary.js, which carry a
+     label like "Partly cloudy" but no WMO code. Order matters: the first
+     match wins, so narrower terms come before broader ones. */
+  const WEATHER_ICON_BY_TEXT = [
+    ["thunder", "weather-storm"], ["storm", "weather-storm"],
+    ["snow", "weather-snow"], ["sleet", "weather-snow"],
+    ["drizzle", "weather-drizzle"],
+    ["shower", "weather-rain"], ["rain", "weather-rain"],
+    ["fog", "weather-fog"], ["mist", "weather-fog"], ["haze", "weather-fog"],
+    ["overcast", "weather-cloud"],
+    ["partly", "weather-partly"], ["mainly clear", "weather-partly"],
+    ["cloud", "weather-cloud"],
+    ["sun", "sun"], ["clear", "sun"]
+  ];
+
+  /* Tint follows the condition family so the card reads at a glance. */
+  const WEATHER_ICON_TONE = {
+    "sun": "weather-icon--sun",
+    "weather-partly": "weather-icon--sun",
+    "weather-storm": "weather-icon--storm",
+    "weather-rain": "weather-icon--rain",
+    "weather-drizzle": "weather-icon--rain",
+    "weather-snow": "weather-icon--snow"
+  };
+
+  function weatherIconName(weather) {
+    if (weather.code != null && WEATHER_ICON_BY_CODE[weather.code]) {
+      return WEATHER_ICON_BY_CODE[weather.code];
+    }
+    const label = String(weather.forecast || "").toLowerCase();
+    for (let i = 0; i < WEATHER_ICON_BY_TEXT.length; i++) {
+      if (label.indexOf(WEATHER_ICON_BY_TEXT[i][0]) !== -1) {
+        return WEATHER_ICON_BY_TEXT[i][1];
+      }
+    }
+    return "weather";
+  }
+
   /**
    * options: { dayId, locationName }
    * `weather.source` ("forecast" | "average") is set by weather.js when the
@@ -221,9 +273,13 @@
     const opts = options || {};
     const card = U.el("div", { class: "weather-card" });
     if (opts.dayId) card.setAttribute("data-weather-for", opts.dayId);
+    const iconName = weatherIconName(weather);
+    const iconClass = "weather-icon" +
+      (WEATHER_ICON_TONE[iconName] ? " " + WEATHER_ICON_TONE[iconName] : "");
+
     card.appendChild(
       U.el("div", { class: "weather-headline" }, [
-        U.icon("weather", "weather-icon"),
+        U.icon(iconName, iconClass),
         U.el("span", { class: "weather-forecast" }, [weather.forecast || ""]),
         weather.temperature ? U.el("span", { class: "weather-temp" }, [weather.temperature]) : null
       ].filter(Boolean))

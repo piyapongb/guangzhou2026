@@ -443,6 +443,10 @@ html { scroll-behavior: smooth; }
   font-size: 14px;
 }
 .weather-icon { color: var(--color-accent); width: 18px; height: 18px; }
+.weather-icon--sun { color: var(--color-warning); }
+.weather-icon--rain { color: var(--color-primary); }
+.weather-icon--storm { color: var(--color-warning); }
+.weather-icon--snow { color: var(--color-text-secondary); }
 .weather-temp { color: var(--color-text-secondary); font-weight: 600; margin-left: auto; }
 
 .weather-chips {

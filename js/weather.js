@@ -326,6 +326,8 @@ window.Weather = (function () {
       ? Math.round(sample.tempMin) + "–" + Math.round(sample.tempMax) + "°C"
       : "";
     return {
+      /* Raw WMO code travels with the label so the card can pick an icon. */
+      code: typeof sample.code === "number" ? sample.code : null,
       forecast: WMO_LABELS[sample.code] || "",
       temperature: range,
       rain: typeof sample.rain === "number" ? Math.round(sample.rain) + "%" : "",

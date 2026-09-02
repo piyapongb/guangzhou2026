@@ -83,6 +83,20 @@
     filter: '<path d="M4 5h16"/><path d="M7 12h10"/><path d="M10 19h4"/>',
     image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5.5-5.5L7 19"/>',
     weather: '<path d="M7 17a4 4 0 1 1 1.2-7.8A5 5 0 0 1 18 11a3.5 3.5 0 0 1-.5 6.9H7z"/>',
+    /* Condition icons, picked per day by WMO code (see components.js). */
+    "weather-cloud": '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>',
+    "weather-partly":
+      '<circle cx="8.5" cy="8" r="3"/><path d="M8.5 2.6V4"/><path d="M4 8H2.6"/><path d="M5 4.5l1 1"/><path d="M12 4.5l-1 1"/><path d="M19 20a3 3 0 0 0 .3-6A4.6 4.6 0 0 0 11 12.6 3.7 3.7 0 0 0 11.5 20H19z"/>',
+    "weather-fog":
+      '<path d="M5 7h14"/><path d="M3 11h13"/><path d="M6 15h12"/><path d="M4 19h10"/>',
+    "weather-drizzle":
+      '<path d="M20 15.6A5 5 0 0 0 18 6h-1.3A8 8 0 1 0 4 14.3"/><path d="M8 13v2"/><path d="M8 18v2"/><path d="M12 15v2"/><path d="M12 20v2"/><path d="M16 13v2"/><path d="M16 18v2"/>',
+    "weather-rain":
+      '<path d="M20 15.6A5 5 0 0 0 18 6h-1.3A8 8 0 1 0 4 14.3"/><path d="M8 13v7"/><path d="M16 13v7"/><path d="M12 15v7"/>',
+    "weather-snow":
+      '<path d="M20 15.6A5 5 0 0 0 18 6h-1.3A8 8 0 1 0 4 14.3"/><path d="M8 16h.01"/><path d="M8 20h.01"/><path d="M12 18h.01"/><path d="M12 22h.01"/><path d="M16 16h.01"/><path d="M16 20h.01"/>',
+    "weather-storm":
+      '<path d="M19 16.4A5 5 0 0 0 18 6h-1.3A8 8 0 1 0 5 15.2"/><path d="M13 11l-4 6h6l-4 6"/>',
     calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 10h18"/>',
     star: '<path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6-5.9-3.3-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" fill="currentColor" stroke="none"/>'
   };
