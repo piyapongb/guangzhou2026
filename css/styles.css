@@ -798,19 +798,8 @@ button.timeline-media:focus-visible img { transform: scale(1.08); }
   align-items: center;
   justify-content: center;
   color: var(--color-primary);
-  position: relative;
 }
-.flight-route-line::before, .flight-route-line::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 34%;
-  height: 1px;
-  background: var(--color-border-strong);
-}
-.flight-route-line::before { left: 0; }
-.flight-route-line::after { right: 0; }
-.flight-route-icon { width: 16px; height: 16px; transform: rotate(45deg); }
+.flight-route-icon { width: 16px; height: 16px; transform: rotate(-45deg); }
 
 .flight-price {
   margin-top: var(--space-3);

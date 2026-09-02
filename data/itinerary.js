@@ -36,9 +36,9 @@ window.ITINERARY_DATA = [
         departureAirport: "CNX",
         arrivalAirport: "CAN",
         departureTime: "21:20",
-        departureDateNote: "21 Oct",
+        departureDateNote: "22 Oct 2026",
         arrivalTime: "01:05",
-        arrivalDateNote: "22 Oct",
+        arrivalDateNote: "23 Oct 2026",
         arrivalTerminal: "Terminal 3"
       },
       {
@@ -333,8 +333,10 @@ window.ITINERARY_DATA = [
         departureAirport: "CAN",
         arrivalAirport: "CNX",
         departureTime: "05:55",
+        departureDateNote: "26 Oct 2026",
         departureTerminal: "Terminal 3",
-        arrivalTime: "08:00"
+        arrivalTime: "08:00",
+        arrivalDateNote: "26 Oct 2026"
       }
     ]
   }
