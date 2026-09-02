@@ -1,0 +1,58 @@
+/* =========================================================================
+   Responsive breakpoints
+   Mobile: < 768px (base styles in styles.css)
+   Tablet: 768–1023px
+   Desktop: >= 1024px
+   ========================================================================= */
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 768px) {
+  .container { padding-inline: var(--space-6); }
+
+  .hero { min-height: 240px; }
+  .hero-content { padding: var(--space-8) var(--space-6) var(--space-7); }
+
+  .day-nav-list { overflow-x: visible; flex-wrap: wrap; }
+
+  .restaurant-grid { grid-template-columns: repeat(2, 1fr); }
+  .restaurant-grid--nearby { grid-template-columns: repeat(2, 1fr); }
+
+  .timeline-item { grid-template-columns: 64px 20px 1fr; }
+  .timeline-item::before { left: 73px; }
+  .detail-content { padding-left: 76px; }
+  .nearby-restaurants { padding-left: 76px; }
+}
+
+/* ---------- Desktop ---------- */
+
+@media (min-width: 1024px) {
+  .utility-bar-inner, .main-tabs-bar .container, .tab-panel { padding-inline: var(--space-7); }
+
+  .hero { min-height: 300px; }
+  .hero-title { font-size: 38px; }
+
+  .main-tabs { gap: var(--space-4); }
+  .main-tab { font-size: 15px; padding-inline: var(--space-3); }
+
+  .day-nav { top: 57px; }
+
+  .restaurant-grid { grid-template-columns: repeat(3, 1fr); }
+  .restaurant-grid--nearby { grid-template-columns: repeat(2, 1fr); max-width: 620px; }
+
+  .timeline-item { grid-template-columns: 72px 20px 1fr; }
+  .timeline-item::before { left: 81px; }
+  .detail-content { padding-left: 84px; max-width: 640px; }
+  .nearby-restaurants { padding-left: 84px; }
+
+  .timeline-media { width: 68px; height: 68px; }
+
+  .hotel-list { display: grid; grid-template-columns: repeat(2, 1fr); align-items: start; gap: var(--space-4); }
+}
+
+@media (min-width: 1280px) {
+  .day-section { display: grid; grid-template-columns: minmax(0, 720px) 1fr; column-gap: var(--space-8); align-items: start; }
+  .day-header { grid-column: 1 / -1; }
+  .weather-card { grid-column: 2; grid-row: 3; margin-top: 0; align-self: start; position: sticky; top: 140px; }
+  .timeline { grid-column: 1; grid-row: 3; }
+}
