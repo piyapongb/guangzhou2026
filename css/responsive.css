@@ -20,8 +20,6 @@
 
   .timeline-item { grid-template-columns: 64px 20px 1fr; }
   .timeline-item::before { left: 73px; }
-  .detail-content { padding-left: 76px; }
-  .nearby-restaurants { padding-left: 76px; }
 }
 
 /* ---------- Desktop ---------- */
@@ -40,8 +38,7 @@
 
   .timeline-item { grid-template-columns: 72px 20px 1fr; }
   .timeline-item::before { left: 81px; }
-  .detail-content { padding-left: 84px; max-width: 640px; }
-  .nearby-restaurants { padding-left: 84px; }
+  .detail-content { max-width: 640px; }
 
   .timeline-media { width: 68px; height: 68px; }
 
