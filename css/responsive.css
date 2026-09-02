@@ -35,8 +35,6 @@
   .main-tabs { gap: var(--space-4); }
   .main-tab { font-size: 15px; padding-inline: var(--space-3); }
 
-  .day-nav { top: 57px; }
-
   .restaurant-grid { grid-template-columns: repeat(3, 1fr); }
   .restaurant-grid--nearby { grid-template-columns: repeat(2, 1fr); max-width: 620px; }
 
@@ -53,6 +51,13 @@
 @media (min-width: 1280px) {
   .day-section { display: grid; grid-template-columns: minmax(0, 720px) 1fr; column-gap: var(--space-8); align-items: start; }
   .day-header { grid-column: 1 / -1; }
-  .weather-card { grid-column: 2; grid-row: 3; margin-top: 0; align-self: start; position: sticky; top: 140px; }
+  .weather-card {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 0;
+    align-self: start;
+    position: sticky;
+    top: calc(var(--utility-bar-height, 47px) + var(--main-tabs-height, 49px) + var(--space-6));
+  }
   .timeline { grid-column: 1; grid-row: 3; }
 }

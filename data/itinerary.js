@@ -5,6 +5,9 @@
  *
  * Restaurant items never embed a full restaurant record — they reference
  * restaurants.js by id (restaurantId / nearbyRestaurantIds).
+ *
+ * Activity details only surface the destination's metroStation / metroExit
+ * (no in-between commuting steps) plus entranceFee where relevant.
  */
 window.ITINERARY_DATA = [
   {
@@ -28,29 +31,12 @@ window.ITINERARY_DATA = [
         title: "Flight to Guangzhou",
         titleZh: "飞往广州",
         icon: "flight",
-        airline: "China Southern Airlines",
-        flightNumber: "CZ3055",
+        airline: "Spring Airlines",
+        flightNumber: "9C8934",
         departureAirport: "CNX",
         arrivalAirport: "CAN",
         departureTime: "10:30",
-        arrivalTime: "14:20",
-        price: "฿5,900"
-      },
-      {
-        id: "d1-transfer-hotel",
-        type: "transfer",
-        time: "15:00",
-        title: "Airport to Hotel",
-        titleZh: "机场前往酒店",
-        icon: "metro",
-        details: {
-          description: "นั่งรถไฟฟ้าแอร์พอร์ตเอ็กซ์เพรสจากสนามบินไป๋หวินไปยังย่านเทียนเหอ",
-          transport: "Metro",
-          metroStation: "Airport South → Tianhe Coach Terminal",
-          metroExit: "D",
-          travelDuration: "45 min",
-          travelCost: "¥8"
-        }
+        arrivalTime: "14:20"
       },
       {
         id: "d1-hotel-checkin",
@@ -76,11 +62,8 @@ window.ITINERARY_DATA = [
           description:
             "ถนนคนเดินเก่าแก่ใจกลางเมือง มีร่องรอยถนนโบราณให้ชมใต้กระจก และร้านค้าสองฝั่งถนนคึกคักยามค่ำ",
           location: "Beijing Road, Yuexiu District",
-          transport: "Metro",
           metroStation: "Gongyuanqian",
-          metroExit: "B",
-          travelDuration: "10 min walk",
-          travelCost: "¥4"
+          metroExit: "B"
         }
       },
       {
@@ -121,11 +104,8 @@ window.ITINERARY_DATA = [
           description:
             "ศาลาบรรพบุรุษตระกูลเฉินที่มีงานแกะสลักไม้และปูนปั้นสวยงามที่สุดแห่งหนึ่งของกวางตุ้ง",
           location: "34 Enlong Li, Liwan District",
-          transport: "Metro",
           metroStation: "Chen Clan Academy",
           metroExit: "D",
-          travelDuration: "15 min",
-          travelCost: "¥5",
           entranceFee: "¥10",
           ticketUrl: "",
           referenceUrl: "",
@@ -154,11 +134,8 @@ window.ITINERARY_DATA = [
           description:
             "หอคอยสัญลักษณ์ของกวางโจว ขึ้นชมวิวเมืองและแม่น้ำจูเจียงแบบพาโนรามา",
           location: "222 Yuejiang West Road, Haizhu District",
-          transport: "Metro",
           metroStation: "Canton Tower",
           metroExit: "B1",
-          travelDuration: "20 min",
-          travelCost: "¥3",
           entranceFee: "¥150",
           ticketUrl: "https://www.cantontower.com/",
           referenceUrl: "https://www.tripadvisor.com/",
@@ -175,9 +152,7 @@ window.ITINERARY_DATA = [
         icon: "park",
         details: {
           description: "สวนสาธารณะริมแม่น้ำ จุดถ่ายรูปหอคอยแคนตันวิวสวยตอนพลบค่ำ",
-          location: "Haixinsha Island, Tianhe District",
-          transport: "Walk",
-          travelDuration: "10 min walk"
+          location: "Haixinsha Island, Tianhe District"
         }
       },
       {
@@ -201,11 +176,8 @@ window.ITINERARY_DATA = [
         details: {
           description: "ล่องเรือชมไฟประดับสองฝั่งแม่น้ำจูเจียงยามค่ำคืน บรรยากาศโรแมนติก",
           location: "Xidi Pier, Yuexiu District",
-          transport: "Metro",
           metroStation: "Haizhu Square",
           metroExit: "C",
-          travelDuration: "15 min",
-          travelCost: "¥4",
           entranceFee: "¥88",
           ticketUrl: ""
         }
@@ -238,11 +210,8 @@ window.ITINERARY_DATA = [
           description:
             "เกาะเล็ก ๆ ริมแม่น้ำที่เต็มไปด้วยอาคารสไตล์ยุโรปเก่า เดินเล่นถ่ายรูปสบาย ๆ",
           location: "Shamian Island, Liwan District",
-          transport: "Metro",
           metroStation: "Huangsha",
-          metroExit: "F",
-          travelDuration: "10 min walk",
-          travelCost: "¥4"
+          metroExit: "F"
         }
       },
       {
@@ -267,28 +236,9 @@ window.ITINERARY_DATA = [
           description:
             "สวนสาธารณะที่ใหญ่ที่สุดในกวางโจว มีรูปปั้นแพะห้าตัวอันเป็นสัญลักษณ์ของเมือง",
           location: "988 Jiefang North Road, Yuexiu District",
-          transport: "Metro",
           metroStation: "Yuexiu Park",
           metroExit: "A",
-          travelDuration: "5 min walk",
-          travelCost: "¥3",
           entranceFee: "Free"
-        }
-      },
-      {
-        id: "d3-transfer",
-        type: "transfer",
-        time: "17:00",
-        title: "Transfer to Airport Hotel",
-        titleZh: "前往机场酒店",
-        icon: "metro",
-        details: {
-          description: "ย้ายที่พักไปโรงแรมใกล้สนามบินเพื่อความสะดวกในวันเดินทางกลับ",
-          transport: "Metro",
-          metroStation: "Airport South",
-          metroExit: "C",
-          travelDuration: "50 min",
-          travelCost: "¥9"
         }
       },
       {
@@ -339,40 +289,30 @@ window.ITINERARY_DATA = [
         thumbnail: "assets/images/activities/shopping.svg",
         icon: "shopping",
         details: {
-          description: "ช้อปปิ้งของฝากรอบสุดท้ายก่อนเดินทางกลับสนามบิน",
-          location: "Tianhe District",
-          transport: "Walk",
-          travelDuration: "15 min walk"
+          description: "ช้อปปิ้งของฝากรอบสุดท้ายก่อนเดินทางกลับ",
+          location: "Tianhe District"
         }
-      },
+      }
+    ]
+  },
+  {
+    id: "day-5",
+    dayNumber: 5,
+    date: "2026-10-26",
+    items: [
       {
-        id: "d4-transfer-airport",
-        type: "transfer",
-        time: "12:00",
-        title: "Hotel to Airport",
-        titleZh: "酒店前往机场",
-        icon: "metro",
-        details: {
-          description: "เดินทางจากโรงแรมไปยังสนามบินไป๋หวินเพื่อเช็คอินเที่ยวบินขากลับ",
-          transport: "Shuttle",
-          travelDuration: "15 min",
-          travelCost: "Free"
-        }
-      },
-      {
-        id: "d4-flight-out",
+        id: "d5-flight-out",
         type: "flight",
         time: "15:40",
         title: "Flight to Chiang Mai",
         titleZh: "飞往清迈",
         icon: "flight",
-        airline: "China Southern Airlines",
-        flightNumber: "CZ3056",
+        airline: "Spring Airlines",
+        flightNumber: "9C8933",
         departureAirport: "CAN",
         arrivalAirport: "CNX",
         departureTime: "15:40",
-        arrivalTime: "17:35",
-        price: "฿5,900"
+        arrivalTime: "17:35"
       }
     ]
   }

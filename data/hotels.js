@@ -16,7 +16,7 @@ window.HOTELS_DATA = [
   {
     id: "hotel-002",
     stayFrom: "2026-10-24",
-    stayTo: "2026-10-25",
+    stayTo: "2026-10-26",
     name: "Baiyun Airport Transit Hotel",
     nameZh: "白云机场中转酒店",
     address: "1 Airport Road, Baiyun District, Guangzhou",

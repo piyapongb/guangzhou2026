@@ -82,7 +82,8 @@
     train: '<rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 12h12"/><circle cx="9" cy="16.5" r="0" /><path d="M9 20l-2 2"/><path d="M15 20l2 2"/><circle cx="9.5" cy="8" r="1"/><circle cx="14.5" cy="8" r="1"/>',
     filter: '<path d="M4 5h16"/><path d="M7 12h10"/><path d="M10 19h4"/>',
     image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5.5-5.5L7 19"/>',
-    weather: '<path d="M7 17a4 4 0 1 1 1.2-7.8A5 5 0 0 1 18 11a3.5 3.5 0 0 1-.5 6.9H7z"/>'
+    weather: '<path d="M7 17a4 4 0 1 1 1.2-7.8A5 5 0 0 1 18 11a3.5 3.5 0 0 1-.5 6.9H7z"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 10h18"/>'
   };
 
   function iconSvg(name, extraClass) {

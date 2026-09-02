@@ -46,6 +46,26 @@
     bindThemeEvents();
     initTheme();
     initDayObserver(days);
+    initStickyOffsets();
+  }
+
+  /* ---------- Sticky header offsets ---------- */
+
+  function syncStickyOffsets() {
+    const root = document.documentElement;
+    const utilityBar = document.querySelector(".utility-bar");
+    const tabsBar = document.querySelector(".main-tabs-bar");
+    const dayNav = document.querySelector(".day-nav");
+    root.style.setProperty("--utility-bar-height", (utilityBar ? utilityBar.offsetHeight : 0) + "px");
+    root.style.setProperty("--main-tabs-height", (tabsBar ? tabsBar.offsetHeight : 0) + "px");
+    if (dayNav) {
+      root.style.setProperty("--day-nav-height", dayNav.offsetHeight + "px");
+    }
+  }
+
+  function initStickyOffsets() {
+    requestAnimationFrame(syncStickyOffsets);
+    window.addEventListener("resize", U.debounce(syncStickyOffsets, 150));
   }
 
   function buildRestaurantIndex(restaurants) {

@@ -53,8 +53,15 @@
     return panel;
   }
 
-  function mediaThumb(src, alt, iconKey, className) {
-    const wrap = U.el("div", { class: "media-thumb " + (className || "") });
+  function mediaThumb(src, alt, iconKey, className, clickable) {
+    const tag = clickable && src ? "button" : "div";
+    const attrs = { class: "media-thumb " + (className || "") };
+    if (clickable && src) {
+      attrs.type = "button";
+      attrs["data-lightbox-src"] = src;
+      attrs["aria-label"] = "View larger photo of " + (alt || "");
+    }
+    const wrap = U.el(tag, attrs);
     if (src) {
       wrap.appendChild(
         U.el("img", {
@@ -144,9 +151,9 @@
   /* ---------- Main tabs ---------- */
 
   const TAB_DEFS = [
-    { id: "itinerary", label: "Itinerary" },
-    { id: "restaurants", label: "Restaurants" },
-    { id: "hotels", label: "Hotels" }
+    { id: "itinerary", label: "Itinerary", icon: "calendar" },
+    { id: "restaurants", label: "Restaurants", icon: "food" },
+    { id: "hotels", label: "Hotels", icon: "hotel" }
   ];
 
   function renderMainTabs(activeTab) {
@@ -166,7 +173,7 @@
             "data-tab-target": tab.id,
             tabindex: isActive ? "0" : "-1"
           },
-          [tab.label]
+          [U.icon(tab.icon, "main-tab-icon"), U.el("span", {}, [tab.label])]
         )
       );
     });
@@ -241,20 +248,17 @@
       fieldBlock("Location", details.location)
     ].forEach(function (node) { if (node) wrap.appendChild(node); });
 
-    const transportPairs = [
-      { label: "Transport", value: details.transport },
+    const metroPairs = [
       { label: "Metro Station", value: details.metroStation },
       { label: "Exit", value: details.metroExit }
     ];
-    const transportRow = statRow(transportPairs);
-    if (transportRow) {
-      transportRow.classList.add("stat-row--transport");
-      wrap.appendChild(transportRow);
+    const metroRow = statRow(metroPairs);
+    if (metroRow) {
+      metroRow.classList.add("stat-row--transport");
+      wrap.appendChild(metroRow);
     }
 
     const costPairs = [
-      { label: "Travel time", value: details.travelDuration },
-      { label: "Travel cost", value: details.travelCost },
       { label: "Entrance fee", value: details.entranceFee }
     ];
     const costRow = statRow(costPairs);
@@ -437,7 +441,7 @@
     const row = U.el("div", { class: "timeline-row" });
 
     if (item.thumbnail) {
-      row.appendChild(mediaThumb(item.thumbnail, item.title, item.icon, "timeline-media"));
+      row.appendChild(mediaThumb(item.thumbnail, item.title, item.icon, "timeline-media", true));
     }
 
     const main = U.el("div", { class: "timeline-main" });
