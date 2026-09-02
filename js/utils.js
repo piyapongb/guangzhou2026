@@ -59,7 +59,7 @@
     hotel:
       '<path d="M3 21V7l7-4 7 4v14"/><path d="M3 21h18"/><path d="M9 21v-6h6v6"/>',
     flight:
-      '<path d="M10.5 20.5l1.5-4 1.5 4-1.5 1-1.5-1z"/><path d="M2 15.5l4-1.5 4 1.5-1-4 1-1.5-8-2.5v6.5l0 1.5z" transform="translate(0)"/><path d="M12 3l9 9-4 1.5L12 9l-5 4.5L3 12l9-9z"/>',
+      '<path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>',
     walk:
       '<circle cx="13" cy="4" r="1.6"/><path d="M10 21l2-6 2 2 3 1"/><path d="M9 13l2-4 3 1 3 4"/><path d="M8 9l3-2"/>',
     "night-view":
@@ -83,7 +83,8 @@
     filter: '<path d="M4 5h16"/><path d="M7 12h10"/><path d="M10 19h4"/>',
     image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5.5-5.5L7 19"/>',
     weather: '<path d="M7 17a4 4 0 1 1 1.2-7.8A5 5 0 0 1 18 11a3.5 3.5 0 0 1-.5 6.9H7z"/>',
-    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 10h18"/>'
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 10h18"/>',
+    star: '<path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6-5.9-3.3-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" fill="currentColor" stroke="none"/>'
   };
 
   function iconSvg(name, extraClass) {

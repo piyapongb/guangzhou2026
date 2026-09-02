@@ -5,7 +5,12 @@
  * never embed a duplicate copy of a restaurant object.
  *
  * Fields: id, zone, name, nameZh, image, gallery, cuisine, description,
- * address, price, recommendedDishes, referenceUrl, referenceLabel
+ * address, price, recommendedDishes, links
+ *
+ * `links` is an array of { label, url, type: "review"|"website", rating? }
+ * rendered as a "Reviews & Links" list — use it to attach one or many
+ * review sites / official sites per restaurant. Mock data below; replace
+ * with real links and ratings when available.
  */
 window.RESTAURANTS_DATA = [
   {
@@ -24,8 +29,11 @@ window.RESTAURANTS_DATA = [
     address: "20 Dishifu Road, Liwan District, Guangzhou",
     price: "¥60–120",
     recommendedDishes: ["Char Siu Bun", "Shrimp Dumpling", "Egg Tart"],
-    referenceUrl: "https://www.tripadvisor.com/",
-    referenceLabel: "Reviews"
+    links: [
+      { label: "TripAdvisor", url: "https://www.tripadvisor.com/", type: "review", rating: "4.5" },
+      { label: "Dianping (大众点评)", url: "https://www.dianping.com/", type: "review", rating: "4.6" },
+      { label: "Official Website", url: "https://www.taotaoju.com/", type: "website" }
+    ]
   },
   {
     id: "restaurant-002",
@@ -40,8 +48,7 @@ window.RESTAURANTS_DATA = [
     address: "151 Longjin West Road, Liwan District, Guangzhou",
     price: "¥80–150",
     recommendedDishes: ["Steamed Rice Rolls", "Lotus Paste Pastry", "BBQ Pork Puff"],
-    referenceUrl: "",
-    referenceLabel: ""
+    links: []
   },
   {
     id: "restaurant-003",
@@ -56,8 +63,10 @@ window.RESTAURANTS_DATA = [
     address: "228 Tianhe Road, Tianhe District, Guangzhou",
     price: "¥100–180",
     recommendedDishes: ["Sliced Beef", "Hand-pulled Noodles", "Mushroom Platter"],
-    referenceUrl: "https://www.haidilao.com/",
-    referenceLabel: "Official Site"
+    links: [
+      { label: "Official Site", url: "https://www.haidilao.com/", type: "website" },
+      { label: "Dianping (大众点评)", url: "https://www.dianping.com/", type: "review", rating: "4.8" }
+    ]
   },
   {
     id: "restaurant-004",
@@ -72,8 +81,7 @@ window.RESTAURANTS_DATA = [
     address: "1 Huacheng Avenue, Tianhe District, Guangzhou",
     price: "¥150–300",
     recommendedDishes: ["Steamed Garoupa", "Salt-baked Prawns", "Typhoon Shelter Crab"],
-    referenceUrl: "",
-    referenceLabel: ""
+    links: []
   },
   {
     id: "restaurant-005",
@@ -88,8 +96,7 @@ window.RESTAURANTS_DATA = [
     address: "2 Wenchang South Road, Liwan District, Guangzhou",
     price: "¥90–160",
     recommendedDishes: ["Roast Goose", "Pan-fried Radish Cake", "Almond Cream"],
-    referenceUrl: "",
-    referenceLabel: ""
+    links: []
   },
   {
     id: "restaurant-006",
@@ -104,8 +111,7 @@ window.RESTAURANTS_DATA = [
     address: "Beijing Road Pedestrian Street, Yuexiu District, Guangzhou",
     price: "¥15–40",
     recommendedDishes: ["Stinky Tofu", "Rice Noodle Rolls", "Sugar Cane Juice"],
-    referenceUrl: "",
-    referenceLabel: ""
+    links: []
   },
   {
     id: "restaurant-007",
@@ -120,8 +126,7 @@ window.RESTAURANTS_DATA = [
     address: "Shamian Street, Liwan District, Guangzhou",
     price: "¥40–90",
     recommendedDishes: ["French Toast", "Iced Latte", "Egg Waffle"],
-    referenceUrl: "",
-    referenceLabel: ""
+    links: []
   },
   {
     id: "restaurant-008",
@@ -136,8 +141,7 @@ window.RESTAURANTS_DATA = [
     address: "18 Binjiang Road, Haizhu District, Guangzhou",
     price: "¥120–220",
     recommendedDishes: ["Steamed Scallops", "Black Pepper Squid", "Congee"],
-    referenceUrl: "",
-    referenceLabel: ""
+    links: []
   },
   {
     id: "restaurant-009",
@@ -152,7 +156,6 @@ window.RESTAURANTS_DATA = [
     address: "5 Zhongshan Avenue, Tianhe District, Guangzhou",
     price: "¥25–45",
     recommendedDishes: ["Wonton Noodles", "Beef Brisket Noodles"],
-    referenceUrl: "",
-    referenceLabel: ""
+    links: []
   }
 ];

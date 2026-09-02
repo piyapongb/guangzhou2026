@@ -204,20 +204,36 @@
     searchWrap.appendChild(searchInput);
     toolbar.appendChild(searchWrap);
 
-    const filterWrap = U.el("div", { class: "filter-field" });
-    filterWrap.appendChild(U.el("label", { for: "cuisine-filter", class: "filter-label" }, ["Cuisine"]));
+    const zoneFilterWrap = U.el("div", { class: "filter-field" });
+    zoneFilterWrap.appendChild(U.icon("map-pin", "filter-field-icon"));
+    zoneFilterWrap.appendChild(U.el("label", { for: "zone-filter", class: "filter-label" }, ["Zone"]));
+    const zoneSelect = C.renderZoneFilter(C.getUniqueZones(restaurants));
+    zoneFilterWrap.appendChild(zoneSelect);
+    toolbar.appendChild(zoneFilterWrap);
+
+    const cuisineFilterWrap = U.el("div", { class: "filter-field" });
+    cuisineFilterWrap.appendChild(U.icon("filter", "filter-field-icon"));
+    cuisineFilterWrap.appendChild(U.el("label", { for: "cuisine-filter", class: "filter-label" }, ["Cuisine"]));
     const cuisineSelect = C.renderCuisineFilter(C.getUniqueCuisines(restaurants));
-    filterWrap.appendChild(cuisineSelect);
-    toolbar.appendChild(filterWrap);
+    cuisineFilterWrap.appendChild(cuisineSelect);
+    toolbar.appendChild(cuisineFilterWrap);
 
     panel.appendChild(toolbar);
+
+    const meta = U.el("div", { class: "restaurant-toolbar-meta" });
+    const resultsCount = U.el("span", { id: "restaurant-count" }, [""]);
+    const clearBtn = U.el("button", { type: "button", class: "clear-filters-btn", id: "clear-filters" }, ["Clear filters"]);
+    clearBtn.hidden = true;
+    meta.appendChild(resultsCount);
+    meta.appendChild(clearBtn);
+    panel.appendChild(meta);
 
     const resultsWrap = U.el("div", { id: "restaurant-results" });
     const emptyState = U.el("p", { class: "empty-note", id: "restaurant-empty" }, ["No restaurants match your search."]);
     emptyState.hidden = true;
 
-    const zones = C.groupByZone(restaurants);
-    zones.forEach(function (group) {
+    const zoneGroups = C.groupByZone(restaurants);
+    zoneGroups.forEach(function (group) {
       const zoneSection = U.el("div", { class: "zone-group", "data-zone-group": "" });
       zoneSection.appendChild(U.el("h3", { class: "zone-heading" }, [group.zone]));
       const grid = U.el("div", { class: "restaurant-grid" });
@@ -231,23 +247,36 @@
     panel.appendChild(resultsWrap);
     panel.appendChild(emptyState);
 
+    const totalCount = restaurants.length;
+
     const applyFilter = U.debounce(function () {
-      filterRestaurants(searchInput.value, cuisineSelect.value);
+      filterRestaurants(searchInput.value, cuisineSelect.value, zoneSelect.value, totalCount);
     }, 120);
 
     searchInput.addEventListener("input", applyFilter);
     cuisineSelect.addEventListener("change", applyFilter);
+    zoneSelect.addEventListener("change", applyFilter);
+    clearBtn.addEventListener("click", function () {
+      searchInput.value = "";
+      cuisineSelect.value = "";
+      zoneSelect.value = "";
+      filterRestaurants("", "", "", totalCount);
+    });
+
+    filterRestaurants("", "", "", totalCount);
   }
 
-  function filterRestaurants(query, cuisine) {
+  function filterRestaurants(query, cuisine, zone, totalCount) {
     const q = U.normalize(query);
     const c = U.normalize(cuisine);
+    const z = U.normalize(zone);
     let visibleCount = 0;
 
     document.querySelectorAll("#restaurant-results .restaurant-card").forEach(function (card) {
       const matchesQuery = !q || card.getAttribute("data-search").indexOf(q) !== -1;
       const matchesCuisine = !c || card.getAttribute("data-cuisine").split("|").indexOf(c) !== -1;
-      const visible = matchesQuery && matchesCuisine;
+      const matchesZone = !z || card.getAttribute("data-zone") === z;
+      const visible = matchesQuery && matchesCuisine && matchesZone;
       card.hidden = !visible;
       if (visible) visibleCount++;
     });
@@ -261,6 +290,18 @@
 
     const empty = document.getElementById("restaurant-empty");
     if (empty) empty.hidden = visibleCount !== 0;
+
+    const countEl = document.getElementById("restaurant-count");
+    if (countEl) {
+      countEl.textContent = visibleCount === totalCount
+        ? totalCount + " restaurants"
+        : visibleCount + " of " + totalCount + " restaurants";
+    }
+
+    const clearBtn = document.getElementById("clear-filters");
+    if (clearBtn) {
+      clearBtn.hidden = !(q || c || z);
+    }
   }
 
   /* ---------- Hotels panel ---------- */

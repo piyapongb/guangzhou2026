@@ -27,7 +27,7 @@ window.ITINERARY_DATA = [
       {
         id: "d1-flight-in",
         type: "flight",
-        time: "10:30",
+        time: "01:05",
         title: "Flight to Guangzhou",
         titleZh: "飞往广州",
         icon: "flight",
@@ -35,8 +35,11 @@ window.ITINERARY_DATA = [
         flightNumber: "9C8934",
         departureAirport: "CNX",
         arrivalAirport: "CAN",
-        departureTime: "10:30",
-        arrivalTime: "14:20"
+        departureTime: "21:20",
+        departureDateNote: "21 Oct",
+        arrivalTime: "01:05",
+        arrivalDateNote: "22 Oct",
+        arrivalTerminal: "Terminal 3"
       },
       {
         id: "d1-hotel-checkin",
@@ -269,6 +272,15 @@ window.ITINERARY_DATA = [
     id: "day-4",
     dayNumber: 4,
     date: "2026-10-25",
+    weather: {
+      forecast: "Sunny",
+      temperature: "24–30°C",
+      rain: "10%",
+      humidity: "68%",
+      wind: "12 km/h",
+      feelsLike: "31°C",
+      uvIndex: 7
+    },
     items: [
       {
         id: "d4-breakfast",
@@ -299,11 +311,20 @@ window.ITINERARY_DATA = [
     id: "day-5",
     dayNumber: 5,
     date: "2026-10-26",
+    weather: {
+      forecast: "Partly cloudy",
+      temperature: "23–28°C",
+      rain: "15%",
+      humidity: "70%",
+      wind: "14 km/h",
+      feelsLike: "28°C",
+      uvIndex: 6
+    },
     items: [
       {
         id: "d5-flight-out",
         type: "flight",
-        time: "15:40",
+        time: "05:55",
         title: "Flight to Chiang Mai",
         titleZh: "飞往清迈",
         icon: "flight",
@@ -311,8 +332,9 @@ window.ITINERARY_DATA = [
         flightNumber: "9C8933",
         departureAirport: "CAN",
         arrivalAirport: "CNX",
-        departureTime: "15:40",
-        arrivalTime: "17:35"
+        departureTime: "05:55",
+        departureTerminal: "Terminal 3",
+        arrivalTime: "08:00"
       }
     ]
   }

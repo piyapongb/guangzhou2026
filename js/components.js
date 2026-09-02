@@ -280,12 +280,62 @@
 
   /* ---------- Restaurant card + detail (shared by Guide and Itinerary) ---------- */
 
+  function getRestaurantLinks(restaurant) {
+    if (restaurant.links && restaurant.links.length) return restaurant.links;
+    if (restaurant.referenceUrl) {
+      return [{ label: restaurant.referenceLabel || "Reviews", url: restaurant.referenceUrl, type: "review" }];
+    }
+    return [];
+  }
+
+  function renderReviewLinks(restaurant) {
+    const links = getRestaurantLinks(restaurant).filter(function (l) {
+      return l && U.isSafeExternalUrl(l.url);
+    });
+    if (!links.length) return null;
+
+    const wrap = U.el("div", { class: "field-block review-links" });
+    wrap.appendChild(U.el("h4", { class: "field-label" }, ["Reviews & Links"]));
+    const list = U.el("ul", { class: "review-link-list" });
+
+    links.forEach(function (link) {
+      const iconKey = link.type === "website" ? "external" : "star";
+      const item = U.el("li", {}, [
+        U.el(
+          "a",
+          {
+            href: link.url,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            class: "review-link",
+            "aria-label": link.label + " (opens in a new tab)"
+          },
+          [
+            U.el("span", { class: "review-link-icon" }, [U.icon(iconKey)]),
+            U.el("span", { class: "review-link-body" }, [
+              U.el("span", { class: "review-link-label" }, [link.label]),
+              link.rating
+                ? U.el("span", { class: "review-link-rating" }, [U.icon("star"), link.rating])
+                : null
+            ].filter(Boolean)),
+            U.icon("external", "review-link-external")
+          ]
+        )
+      ]);
+      list.appendChild(item);
+    });
+
+    wrap.appendChild(list);
+    return wrap;
+  }
+
   function renderRestaurantCard(restaurant, opts) {
     opts = opts || {};
     const panelId = U.uid("restaurant-panel");
     const card = U.el("article", {
       class: "restaurant-card" + (opts.compact ? " restaurant-card--compact" : ""),
       "data-cuisine": (restaurant.cuisine || []).join("|").toLowerCase(),
+      "data-zone": U.normalize(restaurant.zone),
       "data-search": U.normalize(restaurant.name + " " + restaurant.nameZh)
     });
 
@@ -355,9 +405,9 @@
       wrap.appendChild(gallery);
     }
 
-    const link = externalLinkButton(restaurant.referenceUrl, restaurant.referenceLabel || "Reviews", "secondary");
-    if (link) {
-      wrap.appendChild(U.el("div", { class: "detail-actions" }, [link]));
+    const reviewLinks = renderReviewLinks(restaurant);
+    if (reviewLinks) {
+      wrap.appendChild(reviewLinks);
     }
 
     return wrap;
@@ -386,6 +436,18 @@
 
   /* ---------- Flight card ---------- */
 
+  function flightEndpoint(airport, time, dateNote, terminal, extraClass) {
+    const children = [
+      U.el("span", { class: "flight-airport" }, [airport || ""]),
+      U.el("span", { class: "flight-time" }, [time || ""])
+    ];
+    const notes = [dateNote, terminal].filter(Boolean).join(" · ");
+    if (notes) {
+      children.push(U.el("span", { class: "flight-time-note" }, [notes]));
+    }
+    return U.el("div", { class: "flight-endpoint" + (extraClass ? " " + extraClass : "") }, children);
+  }
+
   function renderFlightCard(item) {
     const card = U.el("div", { class: "flight-card" });
     card.appendChild(
@@ -398,17 +460,11 @@
 
     const route = U.el("div", { class: "flight-route" });
     route.appendChild(
-      U.el("div", { class: "flight-endpoint" }, [
-        U.el("span", { class: "flight-airport" }, [item.departureAirport || ""]),
-        U.el("span", { class: "flight-time" }, [item.departureTime || ""])
-      ])
+      flightEndpoint(item.departureAirport, item.departureTime, item.departureDateNote, item.departureTerminal)
     );
     route.appendChild(U.el("div", { class: "flight-route-line", "aria-hidden": "true" }, [U.icon("flight", "flight-route-icon")]));
     route.appendChild(
-      U.el("div", { class: "flight-endpoint flight-endpoint--arrival" }, [
-        U.el("span", { class: "flight-airport" }, [item.arrivalAirport || ""]),
-        U.el("span", { class: "flight-time" }, [item.arrivalTime || ""])
-      ])
+      flightEndpoint(item.arrivalAirport, item.arrivalTime, item.arrivalDateNote, item.arrivalTerminal, "flight-endpoint--arrival")
     );
     card.appendChild(route);
 
@@ -579,6 +635,23 @@
     return select;
   }
 
+  function getUniqueZones(restaurants) {
+    const set = {};
+    restaurants.forEach(function (r) {
+      if (r.zone) set[r.zone] = true;
+    });
+    return Object.keys(set).sort();
+  }
+
+  function renderZoneFilter(zones) {
+    const select = U.el("select", { id: "zone-filter", class: "select" });
+    select.appendChild(U.el("option", { value: "" }, ["All zones"]));
+    zones.forEach(function (z) {
+      select.appendChild(U.el("option", { value: z }, [z]));
+    });
+    return select;
+  }
+
   function groupByZone(restaurants) {
     const zones = {};
     const order = [];
@@ -604,6 +677,8 @@
     renderHotelCard: renderHotelCard,
     getUniqueCuisines: getUniqueCuisines,
     renderCuisineFilter: renderCuisineFilter,
+    getUniqueZones: getUniqueZones,
+    renderZoneFilter: renderZoneFilter,
     groupByZone: groupByZone,
     TAB_DEFS: TAB_DEFS
   };
