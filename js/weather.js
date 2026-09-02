@@ -23,11 +23,18 @@ window.Weather = (function () {
 
   const FORECAST_URL = "https://api.open-meteo.com/v1/forecast";
   const ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive";
+  /* The ERA5 archive publishes no UV, so past UV comes from the archived
+     model output instead. Kept as a separate, optional enrichment: if it
+     fails the rest of the average still renders. */
+  const HISTORICAL_FORECAST_URL = "https://historical-forecast-api.open-meteo.com/v1/forecast";
 
   /* Open-Meteo publishes 16 days of forecast; stay just inside that. */
   const FORECAST_HORIZON_DAYS = 14;
   /* Years of history averaged for the "typical for this date" figure. */
   const CLIMATE_YEARS = 5;
+  /* UV is driven by sun angle and ozone, so it barely moves year to year;
+     two years is plenty and keeps the extra requests cheap. */
+  const CLIMATE_UV_YEARS = 2;
   /* Calendar days either side of the target date folded into that average. */
   const CLIMATE_WINDOW_DAYS = 3;
   /* Rain counts as a "wet day" past this much accumulation. */
@@ -269,6 +276,52 @@ window.Weather = (function () {
     });
   }
 
+  /**
+   * Past daily peak UV for one month, from the archived model output.
+   * Resolves to [] on any failure so a missing UV chip is the worst that
+   * can happen — the temperature, rain and wind average still renders.
+   */
+  function loadClimateUv(location, month) {
+    const latestYear = new Date().getFullYear() - 1;
+    const years = [];
+    for (let i = 0; i < CLIMATE_UV_YEARS; i++) years.push(latestYear - i);
+
+    const key = "climate-uv|" + locationKey(location) + "|" + pad(month) + "|" +
+      years[years.length - 1] + "-" + years[0];
+
+    const cached = cacheGet(key);
+    if (cached) return Promise.resolve(cached);
+
+    return once(key, function () {
+      return Promise.all(years.map(function (year) {
+        const start = toKey(addDays(new Date(year, month - 1, 1), -7));
+        const end = toKey(addDays(new Date(year, month, 0), 7));
+        const url = HISTORICAL_FORECAST_URL +
+          "?latitude=" + encodeURIComponent(location.lat) +
+          "&longitude=" + encodeURIComponent(location.lon) +
+          "&daily=uv_index_max&timezone=auto" +
+          "&start_date=" + start + "&end_date=" + end;
+
+        return getJSON(url).then(function (json) {
+          const daily = json.daily || {};
+          return (daily.time || []).map(function (date, i) {
+            return {
+              monthDay: String(date).slice(5),
+              uvIndex: daily.uv_index_max ? daily.uv_index_max[i] : null
+            };
+          });
+        });
+      })).then(function (chunks) {
+        const rows = chunks.reduce(function (all, chunk) { return all.concat(chunk); }, []);
+        cacheSet(key, rows, TTL_CLIMATE);
+        return rows;
+      });
+    }).catch(function (err) {
+      console.warn("[weather] Historical UV unavailable:", err.message);
+      return [];
+    });
+  }
+
   function mostCommonCode(codes) {
     const tally = {};
     let best = null;
@@ -284,10 +337,14 @@ window.Weather = (function () {
     return best;
   }
 
-  function summarizeClimate(rows, target) {
-    const window = rows.filter(function (row) {
+  function inWindow(rows, target) {
+    return rows.filter(function (row) {
       return Math.abs(monthDayDistance(row.monthDay, target)) <= CLIMATE_WINDOW_DAYS;
     });
+  }
+
+  function summarizeClimate(rows, uvRows, target) {
+    const window = inWindow(rows, target);
     if (!window.length) return null;
 
     const wetDays = window.filter(function (row) {
@@ -302,15 +359,19 @@ window.Weather = (function () {
       rain: Math.round((wetDays.length / window.length) * 100),
       wind: average(window.map(function (r) { return r.wind; })),
       humidity: average(window.map(function (r) { return r.humidity; })),
-      uvIndex: null /* Not published by the archive endpoint. */
+      uvIndex: average(inWindow(uvRows || [], target).map(function (r) { return r.uvIndex; }))
     };
   }
 
   function climateFor(location, dateStr) {
     const target = parseKey(dateStr);
     if (!target) return Promise.resolve(null);
-    return loadClimate(location, target.getMonth() + 1).then(function (rows) {
-      const summary = summarizeClimate(rows, target);
+    const month = target.getMonth() + 1;
+    return Promise.all([
+      loadClimate(location, month),
+      loadClimateUv(location, month)
+    ]).then(function (results) {
+      const summary = summarizeClimate(results[0], results[1], target);
       return summary ? toDisplay(summary, "average") : null;
     });
   }
