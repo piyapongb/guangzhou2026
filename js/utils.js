@@ -59,7 +59,7 @@
     hotel:
       '<path d="M3 21V7l7-4 7 4v14"/><path d="M3 21h18"/><path d="M9 21v-6h6v6"/>',
     flight:
-      '<path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>',
+      '<path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="currentColor" stroke="none"/>',
     walk:
       '<circle cx="13" cy="4" r="1.6"/><path d="M10 21l2-6 2 2 3 1"/><path d="M9 13l2-4 3 1 3 4"/><path d="M8 9l3-2"/>',
     "night-view":

@@ -219,7 +219,6 @@ html { scroll-behavior: smooth; }
   top: 0;
   z-index: 21;
   background: var(--color-bg-raised);
-  border-bottom: 1px solid var(--color-border);
 }
 
 .utility-bar-inner {
@@ -1019,6 +1018,21 @@ button.timeline-media:focus-visible img { transform: scale(1.08); }
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
+  overflow: hidden;
+}
+.hotel-card-image {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  background: var(--color-surface-muted);
+}
+.hotel-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hotel-card-body {
   padding: var(--space-4);
 }
 .hotel-stay-range {

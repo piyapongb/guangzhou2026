@@ -587,19 +587,29 @@
     const panelId = U.uid("hotel-panel");
     const card = U.el("article", { class: "hotel-card" });
 
-    card.appendChild(
+    if (hotel.image) {
+      card.appendChild(
+        U.el("div", { class: "hotel-card-image" }, [
+          U.el("img", { src: hotel.image, alt: hotel.name || "", loading: "lazy" })
+        ])
+      );
+    }
+
+    const body = U.el("div", { class: "hotel-card-body" });
+
+    body.appendChild(
       U.el("p", { class: "hotel-stay-range" }, [
         U.icon("clock", "hotel-stay-icon"),
         U.el("span", {}, [U.formatDateShort(hotel.stayFrom) + " – " + U.formatDateShort(hotel.stayTo)])
       ])
     );
 
-    card.appendChild(copyRow(hotel.name, hotel.name, "copy-row--name"));
+    body.appendChild(copyRow(hotel.name, hotel.name, "copy-row--name"));
     if (hotel.nameZh) {
-      card.appendChild(copyRow(hotel.nameZh, hotel.nameZh, "copy-row--zh"));
+      body.appendChild(copyRow(hotel.nameZh, hotel.nameZh, "copy-row--zh"));
     }
 
-    card.appendChild(U.el("div", { class: "hotel-card-footer" }, [detailsToggle(panelId, "Details")]));
+    body.appendChild(U.el("div", { class: "hotel-card-footer" }, [detailsToggle(panelId, "Details")]));
 
     const panel = detailsPanel(panelId);
     const detail = U.el("div", { class: "detail-content" });
@@ -611,7 +621,9 @@
     ]);
     if (stayRow) detail.appendChild(stayRow);
     panel.appendChild(detail);
-    card.appendChild(panel);
+    body.appendChild(panel);
+
+    card.appendChild(body);
 
     return card;
   }

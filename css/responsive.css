@@ -57,7 +57,7 @@
     margin-top: 0;
     align-self: start;
     position: sticky;
-    top: calc(var(--utility-bar-height, 47px) + var(--main-tabs-height, 49px) + var(--space-6));
+    top: calc(var(--utility-bar-height, 47px) + var(--main-tabs-height, 49px) + var(--day-nav-height, 64px) + var(--space-4));
   }
   .timeline { grid-column: 1; grid-row: 3; }
 }

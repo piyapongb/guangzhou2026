@@ -213,7 +213,7 @@
 
     const cuisineFilterWrap = U.el("div", { class: "filter-field" });
     cuisineFilterWrap.appendChild(U.icon("filter", "filter-field-icon"));
-    cuisineFilterWrap.appendChild(U.el("label", { for: "cuisine-filter", class: "filter-label" }, ["Cuisine"]));
+    cuisineFilterWrap.appendChild(U.el("label", { for: "cuisine-filter", class: "filter-label" }, ["Menu"]));
     const cuisineSelect = C.renderCuisineFilter(C.getUniqueCuisines(restaurants));
     cuisineFilterWrap.appendChild(cuisineSelect);
     toolbar.appendChild(cuisineFilterWrap);
