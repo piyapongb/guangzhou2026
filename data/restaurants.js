@@ -130,14 +130,15 @@ window.RESTAURANTS_DATA = [
     id: "restaurant-013",
     zone: "Yuexiu",
     name: "Wentong's",
-    nameZh: "Wentong's",
+    nameZh: "文通冰室",
     image: "assets/images/restaurants/wentongs.svg",
     gallery: [],
-    cuisine: ["Cafe"],
-    description: "คาเฟ่ขนาดกะทัดรัด บรรยากาศสบาย ๆ เหมาะเป็นจุดพักระหว่างเดินเที่ยวย่านนี้",
-    address: "Yuexiu District, Guangzhou (check current branch location on Amap)",
-    price: "¥30–60",
-    recommendedDishes: ["Coffee", "Brunch Set"],
+    cuisine: ["Cha Chaan Teng", "Hong Kong Style", "Cafe"],
+    description:
+      "ร้าน Cha Chaan Teng สไตล์ฮ่องกงชื่อดังมาก คนแน่นและมักต้องต่อคิวช่วงมื้อหลัก มีสาขาในหลายเมือง (กว่างโจว เซินเจิ้น เซี่ยงไฮ้ ฮ่องกง มาเก๊า)",
+    address: "Mayflower Plaza (五月花广场), near Beijing Road, Yuexiu District, Guangzhou",
+    price: "¥50–120",
+    recommendedDishes: ["Hong Kong Milk Tea", "Black Truffle Steak", "Dessert Selection"],
     links: []
   },
   {
