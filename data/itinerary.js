@@ -123,7 +123,7 @@ window.ITINERARY_DATA = [
         time: "15:00",
         title: "Chen Clan Ancestral Hall",
         titleZh: "陈家祠",
-        thumbnail: "assets/images/activities/chen-clan-academy.svg",
+        thumbnail: "assets/images/activities/d2-chen-clan.png",
         icon: "museum",
         details: {
           description:
@@ -150,7 +150,7 @@ window.ITINERARY_DATA = [
         time: "19:00",
         title: "Beijing Road Pedestrian Street",
         titleZh: "北京路步行街",
-        thumbnail: "assets/images/activities/beijing-road.svg",
+        thumbnail: "assets/images/activities/d2-beijing-road.png",
         icon: "shopping",
         details: {
           description:
@@ -183,7 +183,7 @@ window.ITINERARY_DATA = [
         time: "09:00",
         title: "Haixin Bridge",
         titleZh: "海心桥",
-        thumbnail: "assets/images/activities/haixin-bridge.svg",
+        thumbnail: "assets/images/activities/d3-haixin-bridge.png",
         icon: "landmark",
         details: {
           description:
@@ -198,7 +198,7 @@ window.ITINERARY_DATA = [
         time: "10:30",
         title: "Hongcheng Park",
         titleZh: "宏城公园",
-        thumbnail: "assets/images/activities/hongcheng-park.svg",
+        thumbnail: "assets/images/activities/d3-hongcheng-park.png",
         icon: "park",
         details: {
           description: "สวนสาธารณะเงียบสงบ เหมาะกับเดินเล่นพักผ่อนก่อนไปต่อจุดถัดไป",
@@ -212,7 +212,7 @@ window.ITINERARY_DATA = [
         time: "12:00",
         title: "Parc Central",
         titleZh: "天环广场",
-        thumbnail: "assets/images/activities/parc-central.svg",
+        thumbnail: "assets/images/activities/d3-parc-central.png",
         icon: "shopping",
         details: {
           description:
@@ -227,7 +227,7 @@ window.ITINERARY_DATA = [
         time: "15:00",
         title: "Guangzhou Opera House",
         titleZh: "广州大剧院",
-        thumbnail: "assets/images/activities/guangzhou-opera-house.svg",
+        thumbnail: "assets/images/activities/d3-opera-house.png",
         icon: "landmark",
         details: {
           description:
@@ -244,7 +244,7 @@ window.ITINERARY_DATA = [
         time: "17:00",
         title: "Canton Tower",
         titleZh: "广州塔",
-        thumbnail: "assets/images/activities/canton-tower.svg",
+        thumbnail: "assets/images/activities/d3-canton-tower.png",
         icon: "landmark",
         details: {
           description:
@@ -262,7 +262,7 @@ window.ITINERARY_DATA = [
         time: "19:00",
         title: "Liede Bridge",
         titleZh: "猎德大桥",
-        thumbnail: "assets/images/activities/liede-bridge.svg",
+        thumbnail: "assets/images/activities/d3-liede-bridge.png",
         icon: "night-view",
         details: {
           description:
@@ -295,7 +295,7 @@ window.ITINERARY_DATA = [
         time: "09:00",
         title: "Guangzhou Sacred Heart Cathedral",
         titleZh: "石室圣心大教堂",
-        thumbnail: "assets/images/activities/sacred-heart-cathedral.svg",
+        thumbnail: "assets/images/activities/d4-sacred-heart.png",
         icon: "landmark",
         details: {
           description:
@@ -311,7 +311,7 @@ window.ITINERARY_DATA = [
         time: "10:30",
         title: "Liurong Temple",
         titleZh: "六榕寺",
-        thumbnail: "assets/images/activities/liurong-temple.svg",
+        thumbnail: "assets/images/activities/d4-liurong-temple.png",
         icon: "landmark",
         details: {
           description:
@@ -327,7 +327,7 @@ window.ITINERARY_DATA = [
         time: "12:00",
         title: "Teemall",
         titleZh: "天汇广场",
-        thumbnail: "assets/images/activities/teemall.svg",
+        thumbnail: "assets/images/activities/d4-teemall.png",
         icon: "shopping",
         details: {
           description:
@@ -342,7 +342,7 @@ window.ITINERARY_DATA = [
         time: "15:00",
         title: "Dafo Temple",
         titleZh: "大佛寺",
-        thumbnail: "assets/images/activities/dafo-temple.svg",
+        thumbnail: "assets/images/activities/d4-dafo-temple.png",
         icon: "landmark",
         details: {
           description: "วัดพุทธใจกลางเมืองใกล้ถนนปักกิ่ง มีพระพุทธรูปทองขนาดใหญ่เป็นจุดเด่น",
@@ -357,7 +357,7 @@ window.ITINERARY_DATA = [
         time: "17:00",
         title: "Yong Qing Fang",
         titleZh: "永庆坊",
-        thumbnail: "assets/images/activities/yong-qing-fang.svg",
+        thumbnail: "assets/images/activities/d4-yong-qing-fang.png",
         icon: "landmark",
         details: {
           description:
@@ -373,7 +373,7 @@ window.ITINERARY_DATA = [
         time: "19:00",
         title: "Beijing Road Pedestrian Street",
         titleZh: "北京路步行街",
-        thumbnail: "assets/images/activities/beijing-road.svg",
+        thumbnail: "assets/images/activities/d4-beijing-road.png",
         icon: "shopping",
         details: {
           description:
