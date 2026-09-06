@@ -111,21 +111,6 @@ window.RESTAURANTS_DATA = [
     links: []
   },
   {
-    id: "restaurant-007",
-    zone: "Liwan",
-    name: "Shamian Riverside Cafe",
-    nameZh: "沙面江畔咖啡",
-    image: "assets/images/restaurants/shamian-cafe.svg",
-    gallery: [],
-    cuisine: ["Cafe", "Western"],
-    description:
-      "คาเฟ่บรรยากาศยุโรปบนเกาะซาเหมี่ยน เหมาะกับมื้อเช้าหรือพักดื่มกาแฟระหว่างเดินเที่ยว",
-    address: "Shamian Street, Liwan District, Guangzhou",
-    price: "¥40–90",
-    recommendedDishes: ["French Toast", "Iced Latte", "Egg Waffle"],
-    links: []
-  },
-  {
     id: "restaurant-008",
     zone: "Haizhu",
     name: "Litchi Bay Seafood House",
