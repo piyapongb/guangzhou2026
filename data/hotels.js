@@ -11,8 +11,8 @@ window.HOTELS_DATA = [
     nameZh: "广东空港大酒店(广州新白云国际机场直营店)",
     image: "assets/images/hotels/baiyun-airport.svg",
     address: "Near Guangzhou Baiyun International Airport, Guangzhou (free 24h shuttle bus to/from the airport)",
-    checkIn: "02:00",
-    checkOut: "09:00"
+    checkIn: "14:00",
+    checkOut: "12:00"
   },
   {
     id: "hotel-002",
