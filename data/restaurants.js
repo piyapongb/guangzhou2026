@@ -19,10 +19,7 @@ window.RESTAURANTS_DATA = [
     name: "Tao Tao Ju",
     nameZh: "陶陶居",
     image: "assets/images/restaurants/tao-tao-ju.svg",
-    gallery: [
-      "assets/images/restaurants/tao-tao-ju.svg",
-      "assets/images/restaurants/dimsum-alt.svg"
-    ],
+    gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
       "ร้านติ่มซำเก่าแก่ที่เปิดมานานกว่าร้อยปี บรรยากาศแบบจีนโบราณ ขึ้นชื่อเรื่องซาลาเปาและขนมจีบ",
@@ -41,7 +38,7 @@ window.RESTAURANTS_DATA = [
     name: "Panxi Restaurant",
     nameZh: "泮溪酒家",
     image: "assets/images/restaurants/panxi.svg",
-    gallery: ["assets/images/restaurants/panxi.svg"],
+    gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
       "ภัตตาคารริมน้ำสไตล์สวนจีนโบราณ ใหญ่ที่สุดแห่งหนึ่งในกวางโจว เหมาะสำหรับมื้อกลางวันแบบติ่มซำ",
@@ -56,7 +53,7 @@ window.RESTAURANTS_DATA = [
     name: "Haidilao Hot Pot",
     nameZh: "海底捞火锅",
     image: "assets/images/restaurants/haidilao.svg",
-    gallery: ["assets/images/restaurants/haidilao.svg"],
+    gallery: [],
     cuisine: ["Hotpot"],
     description:
       "หม้อไฟชื่อดังระดับประเทศ บริการดีเยี่ยม มีเมนูน้ำซุปให้เลือกหลากหลาย เหมาะกับมื้อเย็น",
@@ -89,7 +86,7 @@ window.RESTAURANTS_DATA = [
     name: "Guangzhou Restaurant",
     nameZh: "广州酒家",
     image: "assets/images/restaurants/guangzhou-restaurant.svg",
-    gallery: ["assets/images/restaurants/guangzhou-restaurant.svg"],
+    gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
       "หนึ่งในภัตตาคารที่มีชื่อเสียงที่สุดของกวางโจว รสชาติต้นตำรับกวางตุ้งดั้งเดิม",
@@ -119,7 +116,7 @@ window.RESTAURANTS_DATA = [
     name: "Shamian Riverside Cafe",
     nameZh: "沙面江畔咖啡",
     image: "assets/images/restaurants/shamian-cafe.svg",
-    gallery: ["assets/images/restaurants/shamian-cafe.svg"],
+    gallery: [],
     cuisine: ["Cafe", "Western"],
     description:
       "คาเฟ่บรรยากาศยุโรปบนเกาะซาเหมี่ยน เหมาะกับมื้อเช้าหรือพักดื่มกาแฟระหว่างเดินเที่ยว",
@@ -164,7 +161,7 @@ window.RESTAURANTS_DATA = [
     name: "Dian Dou De (Xinghuan / Big Treehouse Branch)",
     nameZh: "点都德(星寰店/大树下总店)",
     image: "assets/images/restaurants/dian-dou-de.svg",
-    gallery: ["assets/images/restaurants/dian-dou-de.svg"],
+    gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
       "ติ่มซำเชนดังของกวางโจว สาขานี้ใกล้เขตเมืองเก่าซีกวน เมนูหลากหลายและคิวมักยาวช่วงเที่ยง",
@@ -181,7 +178,7 @@ window.RESTAURANTS_DATA = [
     name: "HEYTEA Lab",
     nameZh: "喜茶 LAB",
     image: "assets/images/restaurants/heytea-lab.svg",
-    gallery: ["assets/images/restaurants/heytea-lab.svg"],
+    gallery: [],
     cuisine: ["Cafe", "Tea"],
     description:
       "ร้านชาสไตล์โมเดิร์นสาขาพิเศษ ตกแต่งเป็นธีมเฉพาะ เหมาะกับการแวะถ่ายรูปและจิบชาผลไม้ระหว่างเดินเที่ยว",
@@ -198,7 +195,7 @@ window.RESTAURANTS_DATA = [
     name: "Nap Cafe Lab",
     nameZh: "Nap Cafe Lab",
     image: "assets/images/restaurants/nap-cafe-lab.svg",
-    gallery: ["assets/images/restaurants/nap-cafe-lab.svg"],
+    gallery: [],
     cuisine: ["Cafe"],
     description:
       "คาเฟ่บรรยากาศเรียบง่าย มินิมอล เหมาะกับพักดื่มกาแฟและทำงานเบา ๆ ระหว่างวัน",
@@ -213,7 +210,7 @@ window.RESTAURANTS_DATA = [
     name: "Wentong's",
     nameZh: "Wentong's",
     image: "assets/images/restaurants/wentongs.svg",
-    gallery: ["assets/images/restaurants/wentongs.svg"],
+    gallery: [],
     cuisine: ["Cafe"],
     description: "คาเฟ่ขนาดกะทัดรัด บรรยากาศสบาย ๆ เหมาะเป็นจุดพักระหว่างเดินเที่ยวย่านนี้",
     address: "Yuexiu District, Guangzhou (check current branch location on Amap)",
@@ -227,7 +224,7 @@ window.RESTAURANTS_DATA = [
     name: "Hakka Yu",
     nameZh: "客家渔",
     image: "assets/images/restaurants/hakka-yu.svg",
-    gallery: ["assets/images/restaurants/hakka-yu.svg"],
+    gallery: [],
     cuisine: ["Local Cuisine", "Hakka"],
     description:
       "ร้านอาหารฮากกา (จีนแคะ) รสชาติเข้มข้นแบบดั้งเดิม อยู่ในห้าง Teemall ชั้น 7 ใกล้ถนนปักกิ่ง",
@@ -242,7 +239,7 @@ window.RESTAURANTS_DATA = [
     name: "Tao Tao Ju (Teemall Beijing Lu Branch)",
     nameZh: "陶陶居(北京路天汇店)",
     image: "assets/images/restaurants/tao-tao-ju-teemall.svg",
-    gallery: ["assets/images/restaurants/tao-tao-ju-teemall.svg"],
+    gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
       "สาขาของติ่มซำชื่อดังโบราณ อยู่ในห้าง Teemall ชั้น 6 ใกล้ถนนปักกิ่ง สะดวกกว่าสาขาดั้งเดิมที่ซีกวน",
@@ -259,7 +256,7 @@ window.RESTAURANTS_DATA = [
     name: "Da Ge Fan (Beijing Road Branch)",
     nameZh: "大鸽饭(北京路店)",
     image: "assets/images/restaurants/da-ge-fan.svg",
-    gallery: ["assets/images/restaurants/da-ge-fan.svg"],
+    gallery: [],
     cuisine: ["Local Cuisine", "Cantonese"],
     description:
       "ร้านขึ้นชื่อเรื่องนกพิราบย่าง (乳鸽) แบบกวางตุ้งดั้งเดิม เมนูซิกเนเจอร์ของย่านถนนปักกิ่ง",
@@ -276,7 +273,7 @@ window.RESTAURANTS_DATA = [
     name: "The raw",
     nameZh: "The raw",
     image: "assets/images/restaurants/the-raw.svg",
-    gallery: ["assets/images/restaurants/the-raw.svg"],
+    gallery: [],
     cuisine: ["Cafe"],
     description:
       "คาเฟ่สายสุขภาพ เมนูเบา ๆ และเครื่องดื่มปั่นสด เหมาะกับมื้อเช้าหรือพักระหว่างเดินเที่ยวย่านนี้",
