@@ -672,13 +672,21 @@ button.timeline-media:focus-visible img { transform: scale(1.08); }
 }
 .details-toggle[aria-expanded="true"] .details-toggle-icon { transform: rotate(180deg); }
 
+/* Sized to the row's real content instead of a guessed max-height, so a
+   panel nesting other accordions (e.g. a restaurant card's own Details
+   opened inside a timeline item's nearby-restaurants list) never gets
+   clipped no matter how tall the combined content grows. */
 .details-panel {
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   opacity: 0;
-  overflow: hidden;
-  transition: max-height var(--motion-slow) var(--ease-standard), opacity var(--motion-base) ease;
+  transition: grid-template-rows var(--motion-slow) var(--ease-standard), opacity var(--motion-base) ease;
 }
-.details-panel.is-open { max-height: 1400px; opacity: 1; }
+.details-panel > * {
+  overflow: hidden;
+  min-height: 0;
+}
+.details-panel.is-open { grid-template-rows: 1fr; opacity: 1; }
 
 /* Panels sit directly inside an unpadded card, so the inset here lines the
    detail text up with the card body above it. The timeline overrides it. */
