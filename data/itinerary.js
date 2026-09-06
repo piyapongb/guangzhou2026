@@ -28,7 +28,7 @@ window.ITINERARY_DATA = [
       {
         id: "d1-flight-in",
         type: "flight",
-        time: "01:05",
+        time: "21:20",
         title: "Flight to Guangzhou",
         titleZh: "飞往广州",
         icon: "flight",
