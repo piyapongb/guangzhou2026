@@ -48,24 +48,6 @@ window.RESTAURANTS_DATA = [
     links: []
   },
   {
-    id: "restaurant-003",
-    zone: "Tianhe",
-    name: "Haidilao Hot Pot",
-    nameZh: "海底捞火锅",
-    image: "assets/images/restaurants/haidilao.svg",
-    gallery: [],
-    cuisine: ["Hotpot"],
-    description:
-      "หม้อไฟชื่อดังระดับประเทศ บริการดีเยี่ยม มีเมนูน้ำซุปให้เลือกหลากหลาย เหมาะกับมื้อเย็น",
-    address: "228 Tianhe Road, Tianhe District, Guangzhou",
-    price: "¥100–180",
-    recommendedDishes: ["Sliced Beef", "Hand-pulled Noodles", "Mushroom Platter"],
-    links: [
-      { label: "Official Site", url: "https://www.haidilao.com/", type: "website" },
-      { label: "Dianping (大众点评)", url: "https://www.dianping.com/", type: "review", rating: "4.8" }
-    ]
-  },
-  {
     id: "restaurant-006",
     zone: "Yuexiu",
     name: "Beijing Road Snack Alley",
