@@ -41,44 +41,6 @@ window.ITINERARY_DATA = [
         arrivalTime: "01:05",
         arrivalDateNote: "23 Oct 2026",
         arrivalTerminal: "Terminal 3"
-      },
-      {
-        id: "d1-hotel-checkin",
-        type: "other",
-        time: "16:00",
-        title: "Hotel Check-in",
-        titleZh: "酒店入住",
-        icon: "hotel",
-        details: {
-          description: "เช็คอินที่ Grand Tianhe Hotel พักผ่อนก่อนออกไปเที่ยวตอนเย็น",
-          location: "Grand Tianhe Hotel, Tianhe District"
-        }
-      },
-      {
-        id: "d1-beijing-road",
-        type: "activity",
-        time: "18:30",
-        title: "Beijing Road Pedestrian Street",
-        titleZh: "北京路步行街",
-        thumbnail: "assets/images/activities/beijing-road.svg",
-        icon: "shopping",
-        details: {
-          description:
-            "ถนนคนเดินเก่าแก่ใจกลางเมือง มีร่องรอยถนนโบราณให้ชมใต้กระจก และร้านค้าสองฝั่งถนนคึกคักยามค่ำ",
-          location: "Beijing Road, Yuexiu District",
-          metroStation: "Gongyuanqian",
-          metroExit: "B"
-        }
-      },
-      {
-        id: "d1-dinner",
-        type: "restaurant",
-        time: "19:30",
-        title: "Dinner",
-        titleZh: "晚餐",
-        icon: "food",
-        restaurantId: "restaurant-006",
-        nearbyRestaurantIds: ["restaurant-006", "restaurant-005"]
       }
     ]
   },
@@ -98,10 +60,68 @@ window.ITINERARY_DATA = [
     },
     items: [
       {
+        id: "d2-hotel-checkin",
+        type: "other",
+        time: "02:00",
+        title: "Hotel Check-in",
+        titleZh: "酒店入住",
+        icon: "hotel",
+        details: {
+          description:
+            "เช็คอินที่ Baiyun Airport Konggang Hotel (广东空港大酒店) หลังลงเครื่อง มีรถรับส่งสนามบินฟรีตลอด 24 ชม.",
+          location: "Baiyun Airport Konggang Hotel, near Guangzhou Baiyun International Airport"
+        }
+      },
+      {
+        id: "d2-hotel-checkout",
+        type: "other",
+        time: "09:00",
+        title: "Hotel Check-out",
+        titleZh: "退房",
+        icon: "hotel",
+        details: {
+          description: "เช็คเอาท์จาก Baiyun Airport Konggang Hotel นั่งรถรับส่งฟรีเข้าเมือง",
+          location: "Baiyun Airport Konggang Hotel, near Guangzhou Baiyun International Airport"
+        }
+      },
+      {
+        id: "d2-luggage-drop",
+        type: "other",
+        time: "10:30",
+        title: "Luggage Drop-off",
+        titleZh: "寄存行李",
+        icon: "hotel",
+        details: {
+          description:
+            "ฝากกระเป๋าที่ City Comfort Inn (麓苑路淘金地铁站店) ก่อนถึงเวลาเช็คอินจริง แล้วออกไปเที่ยวตัวเบา",
+          location: "City Comfort Inn, Luyuan Road, near Taojin Metro Station"
+        }
+      },
+      {
+        id: "d2-cafe-hopping",
+        type: "restaurant",
+        time: "11:30",
+        title: "Cafe Hopping",
+        titleZh: "探店咖啡",
+        icon: "food",
+        restaurantId: "restaurant-017",
+        nearbyRestaurantIds: ["restaurant-017", "restaurant-011", "restaurant-012"]
+      },
+      {
+        id: "d2-lunch",
+        type: "restaurant",
+        time: "13:30",
+        title: "Lunch",
+        titleZh: "午餐",
+        icon: "food",
+        restaurantId: "restaurant-010",
+        nearbyRestaurantIds: ["restaurant-010", "restaurant-001"]
+      },
+      {
         id: "d2-chen-clan",
         type: "activity",
-        time: "09:00",
-        title: "Chen Clan Academy",
+        time: "15:00",
+        title: "Chen Clan Ancestral Hall",
         titleZh: "陈家祠",
         thumbnail: "assets/images/activities/chen-clan-academy.svg",
         icon: "museum",
@@ -111,80 +131,33 @@ window.ITINERARY_DATA = [
           location: "34 Enlong Li, Liwan District",
           metroStation: "Chen Clan Academy",
           metroExit: "D",
-          entranceFee: "¥10",
-          ticketUrl: "",
-          referenceUrl: "",
-          referenceLabel: ""
-        }
-      },
-      {
-        id: "d2-lunch",
-        type: "restaurant",
-        time: "12:00",
-        title: "Lunch",
-        titleZh: "午餐",
-        icon: "food",
-        restaurantId: "restaurant-001",
-        nearbyRestaurantIds: ["restaurant-001", "restaurant-002"]
-      },
-      {
-        id: "d2-canton-tower",
-        type: "activity",
-        time: "14:30",
-        title: "Canton Tower",
-        titleZh: "广州塔",
-        thumbnail: "assets/images/activities/canton-tower.svg",
-        icon: "landmark",
-        details: {
-          description:
-            "หอคอยสัญลักษณ์ของกวางโจว ขึ้นชมวิวเมืองและแม่น้ำจูเจียงแบบพาโนรามา",
-          location: "222 Yuejiang West Road, Haizhu District",
-          metroStation: "Canton Tower",
-          metroExit: "B1",
-          entranceFee: "¥150",
-          ticketUrl: "https://www.cantontower.com/",
-          referenceUrl: "https://www.tripadvisor.com/",
-          referenceLabel: "Reviews"
-        }
-      },
-      {
-        id: "d2-riverside-break",
-        type: "activity",
-        time: "17:30",
-        title: "Haixinsha Square",
-        titleZh: "海心沙",
-        thumbnail: "assets/images/activities/haixinsha.svg",
-        icon: "park",
-        details: {
-          description: "สวนสาธารณะริมแม่น้ำ จุดถ่ายรูปหอคอยแคนตันวิวสวยตอนพลบค่ำ",
-          location: "Haixinsha Island, Tianhe District"
+          entranceFee: "¥10"
         }
       },
       {
         id: "d2-dinner",
         type: "restaurant",
-        time: "19:00",
+        time: "17:30",
         title: "Dinner",
         titleZh: "晚餐",
         icon: "food",
-        restaurantId: "restaurant-003",
-        nearbyRestaurantIds: ["restaurant-003", "restaurant-004"]
+        restaurantId: "restaurant-016",
+        nearbyRestaurantIds: ["restaurant-016", "restaurant-006"]
       },
       {
-        id: "d2-river-cruise",
+        id: "d2-beijing-road",
         type: "activity",
-        time: "20:30",
-        title: "Pearl River Night Cruise",
-        titleZh: "珠江夜游",
-        thumbnail: "assets/images/activities/pearl-river-cruise.svg",
-        icon: "night-view",
+        time: "19:00",
+        title: "Beijing Road Pedestrian Street",
+        titleZh: "北京路步行街",
+        thumbnail: "assets/images/activities/beijing-road.svg",
+        icon: "shopping",
         details: {
-          description: "ล่องเรือชมไฟประดับสองฝั่งแม่น้ำจูเจียงยามค่ำคืน บรรยากาศโรแมนติก",
-          location: "Xidi Pier, Yuexiu District",
-          metroStation: "Haizhu Square",
-          metroExit: "C",
-          entranceFee: "¥88",
-          ticketUrl: ""
+          description:
+            "ถนนคนเดินเก่าแก่ใจกลางเมือง มีร่องรอยถนนโบราณให้ชมใต้กระจก และร้านค้าสองฝั่งถนนคึกคักยามค่ำ",
+          location: "Beijing Road, Yuexiu District",
+          metroStation: "Gongyuanqian",
+          metroExit: "B"
         }
       }
     ]
@@ -205,69 +178,99 @@ window.ITINERARY_DATA = [
     },
     items: [
       {
-        id: "d3-shamian",
+        id: "d3-haixin-bridge",
         type: "activity",
-        time: "09:30",
-        title: "Shamian Island",
-        titleZh: "沙面岛",
-        thumbnail: "assets/images/activities/shamian-island.svg",
+        time: "09:00",
+        title: "Haixin Bridge",
+        titleZh: "海心桥",
+        thumbnail: "assets/images/activities/haixin-bridge.svg",
         icon: "landmark",
         details: {
           description:
-            "เกาะเล็ก ๆ ริมแม่น้ำที่เต็มไปด้วยอาคารสไตล์ยุโรปเก่า เดินเล่นถ่ายรูปสบาย ๆ",
-          location: "Shamian Island, Liwan District",
-          metroStation: "Huangsha",
-          metroExit: "F"
-        }
-      },
-      {
-        id: "d3-lunch",
-        type: "restaurant",
-        time: "12:00",
-        title: "Lunch",
-        titleZh: "午餐",
-        icon: "food",
-        restaurantId: "restaurant-007",
-        nearbyRestaurantIds: ["restaurant-007"]
-      },
-      {
-        id: "d3-yuexiu-park",
-        type: "activity",
-        time: "14:00",
-        title: "Yuexiu Park",
-        titleZh: "越秀公园",
-        thumbnail: "assets/images/activities/yuexiu-park.svg",
-        icon: "park",
-        details: {
-          description:
-            "สวนสาธารณะที่ใหญ่ที่สุดในกวางโจว มีรูปปั้นแพะห้าตัวอันเป็นสัญลักษณ์ของเมือง",
-          location: "988 Jiefang North Road, Yuexiu District",
-          metroStation: "Yuexiu Park",
-          metroExit: "A",
+            "สะพานคนเดินข้ามแม่น้ำจูเจียงที่ออกแบบทันสมัย เชื่อมสองฝั่งเมืองพร้อมวิวหอคอยแคนตัน",
+          location: "Pearl River, Tianhe District, near Haixinsha",
           entranceFee: "Free"
         }
       },
       {
-        id: "d3-hotel-checkin",
-        type: "other",
-        time: "18:00",
-        title: "Hotel Check-in",
-        titleZh: "酒店入住",
-        icon: "hotel",
+        id: "d3-hongcheng-park",
+        type: "activity",
+        time: "10:30",
+        title: "Hongcheng Park",
+        titleZh: "宏城公园",
+        thumbnail: "assets/images/activities/hongcheng-park.svg",
+        icon: "park",
         details: {
-          description: "เช็คอินที่ Baiyun Airport Transit Hotel",
-          location: "Baiyun Airport Transit Hotel"
+          description: "สวนสาธารณะเงียบสงบ เหมาะกับเดินเล่นพักผ่อนก่อนไปต่อจุดถัดไป",
+          location: "Tianhe District, Guangzhou",
+          entranceFee: "Free"
         }
       },
       {
-        id: "d3-dinner",
-        type: "restaurant",
-        time: "19:30",
-        title: "Dinner",
-        titleZh: "晚餐",
-        icon: "food",
-        restaurantId: "restaurant-008",
-        nearbyRestaurantIds: ["restaurant-008", "restaurant-009"]
+        id: "d3-parc-central",
+        type: "activity",
+        time: "12:00",
+        title: "Parc Central",
+        titleZh: "天环广场",
+        thumbnail: "assets/images/activities/parc-central.svg",
+        icon: "shopping",
+        details: {
+          description:
+            "ห้างสรรพสินค้าใจกลางย่านจูเจียงนิวทาวน์ มีร้านอาหารและคาเฟ่ให้เลือกหลากหลายสำหรับมื้อเที่ยง",
+          location: "Zhujiang New Town, Tianhe District",
+          metroStation: "Zhujiang New Town"
+        }
+      },
+      {
+        id: "d3-opera-house",
+        type: "activity",
+        time: "15:00",
+        title: "Guangzhou Opera House",
+        titleZh: "广州大剧院",
+        thumbnail: "assets/images/activities/guangzhou-opera-house.svg",
+        icon: "landmark",
+        details: {
+          description:
+            "สถาปัตยกรรมล้ำสมัยรูปทรงก้อนหินคู่ ออกแบบโดย Zaha Hadid จุดถ่ายรูปสวยริมแม่น้ำจูเจียง",
+          location: "1 Zhujiang West Road, Zhujiang New Town, Tianhe District",
+          metroStation: "Zhujiang New Town",
+          metroExit: "B1",
+          entranceFee: "Free to view exterior; show tickets vary"
+        }
+      },
+      {
+        id: "d3-canton-tower",
+        type: "activity",
+        time: "17:00",
+        title: "Canton Tower",
+        titleZh: "广州塔",
+        thumbnail: "assets/images/activities/canton-tower.svg",
+        icon: "landmark",
+        details: {
+          description:
+            "หอคอยสัญลักษณ์ของกวางโจว ขึ้นชมวิวเมืองและแม่น้ำจูเจียงแบบพาโนรามา",
+          location: "222 Yuejiang West Road, Haizhu District",
+          metroStation: "Canton Tower",
+          metroExit: "B1",
+          entranceFee: "¥150",
+          ticketUrl: "https://www.cantontower.com/"
+        }
+      },
+      {
+        id: "d3-liede-bridge",
+        type: "activity",
+        time: "19:00",
+        title: "Liede Bridge",
+        titleZh: "猎德大桥",
+        thumbnail: "assets/images/activities/liede-bridge.svg",
+        icon: "night-view",
+        details: {
+          description:
+            "จุดชมวิวสะพานยามค่ำคืน มองเห็นแสงไฟหอคอยแคนตันและตึกสูงย่านจูเจียงนิวทาวน์แบบพาโนรามา",
+          location: "Liede, Tianhe District",
+          metroStation: "Liede",
+          entranceFee: "Free"
+        }
       }
     ]
   },
@@ -287,26 +290,97 @@ window.ITINERARY_DATA = [
     },
     items: [
       {
-        id: "d4-breakfast",
-        type: "restaurant",
-        time: "08:30",
-        title: "Breakfast",
-        titleZh: "早餐",
-        icon: "food",
-        restaurantId: "restaurant-009",
-        nearbyRestaurantIds: ["restaurant-009"]
+        id: "d4-sacred-heart",
+        type: "activity",
+        time: "09:00",
+        title: "Guangzhou Sacred Heart Cathedral",
+        titleZh: "石室圣心大教堂",
+        thumbnail: "assets/images/activities/sacred-heart-cathedral.svg",
+        icon: "landmark",
+        details: {
+          description:
+            "โบสถ์คาทอลิกสไตล์กอทิกที่สร้างจากหินแกรนิตทั้งหลัง หนึ่งในโบสถ์หินแบบกอทิกที่ใหญ่ที่สุดในเอเชีย",
+          location: "Yide Road, Yuexiu District",
+          metroStation: "Haizhu Square",
+          entranceFee: "Free"
+        }
       },
       {
-        id: "d4-last-shopping",
+        id: "d4-liurong-temple",
         type: "activity",
-        time: "10:00",
-        title: "Last-minute Shopping",
-        titleZh: "最后采购",
-        thumbnail: "assets/images/activities/shopping.svg",
+        time: "10:30",
+        title: "Liurong Temple",
+        titleZh: "六榕寺",
+        thumbnail: "assets/images/activities/liurong-temple.svg",
+        icon: "landmark",
+        details: {
+          description:
+            "วัดพุทธเก่าแก่กว่าพันปี ขึ้นชื่อเรื่องเจดีย์ดอกไม้สีสันสดใสที่มองเห็นได้แต่ไกล",
+          location: "87 Liurong Road, Yuexiu District",
+          metroStation: "Ximenkou",
+          entranceFee: "¥10"
+        }
+      },
+      {
+        id: "d4-teemall",
+        type: "activity",
+        time: "12:00",
+        title: "Teemall",
+        titleZh: "天汇广场",
+        thumbnail: "assets/images/activities/teemall.svg",
         icon: "shopping",
         details: {
-          description: "ช้อปปิ้งของฝากรอบสุดท้ายก่อนเดินทางกลับ",
-          location: "Tianhe District"
+          description:
+            "ห้างสรรพสินค้าบนถนนปักกิ่ง เหมาะแวะพักกินมื้อเที่ยงและช้อปปิ้ง มีร้าน Hakka Yu ชั้น 7 และ Tao Tao Ju สาขาชั้น 6 ให้เลือก",
+          location: "Beijing Road, Yuexiu District",
+          metroStation: "Gongyuanqian"
+        }
+      },
+      {
+        id: "d4-dafo-temple",
+        type: "activity",
+        time: "15:00",
+        title: "Dafo Temple",
+        titleZh: "大佛寺",
+        thumbnail: "assets/images/activities/dafo-temple.svg",
+        icon: "landmark",
+        details: {
+          description: "วัดพุทธใจกลางเมืองใกล้ถนนปักกิ่ง มีพระพุทธรูปทองขนาดใหญ่เป็นจุดเด่น",
+          location: "Huifu East Road, Yuexiu District, near Beijing Road",
+          metroStation: "Gongyuanqian",
+          entranceFee: "¥10"
+        }
+      },
+      {
+        id: "d4-yong-qing-fang",
+        type: "activity",
+        time: "17:00",
+        title: "Yong Qing Fang",
+        titleZh: "永庆坊",
+        thumbnail: "assets/images/activities/yong-qing-fang.svg",
+        icon: "landmark",
+        details: {
+          description:
+            "ย่านเก่าที่บูรณะใหม่ อาคารสไตล์ซีกวนดั้งเดิมผสมร้านค้าโมเดิร์น เหมาะเดินเล่นถ่ายรูปยามเย็น",
+          location: "Enning Road, Liwan District",
+          metroStation: "Huangsha",
+          entranceFee: "Free"
+        }
+      },
+      {
+        id: "d4-beijing-road",
+        type: "activity",
+        time: "19:00",
+        title: "Beijing Road Pedestrian Street",
+        titleZh: "北京路步行街",
+        thumbnail: "assets/images/activities/beijing-road.svg",
+        icon: "shopping",
+        details: {
+          description:
+            "แวะเดินเล่นชอปปิ้งรอบสุดท้ายก่อนกลับ ถนนคนเดินคึกคักที่สุดแห่งหนึ่งของกวางโจวยามค่ำ",
+          location: "Beijing Road, Yuexiu District",
+          metroStation: "Gongyuanqian",
+          metroExit: "B"
         }
       }
     ]

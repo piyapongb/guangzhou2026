@@ -44,6 +44,16 @@ const SLOTS = {
   "assets/images/activities/haixinsha.svg": "Haixinsha Guangzhou",
   "assets/images/activities/pearl-river-cruise.svg": "Pearl River Guangzhou night",
   "assets/images/activities/shopping.svg": "Tianhe Road Guangzhou",
+  "assets/images/activities/haixin-bridge.svg": "Haixinsha Bridge Guangzhou",
+  "assets/images/activities/hongcheng-park.svg": "Park Guangzhou Tianhe",
+  "assets/images/activities/parc-central.svg": "Zhujiang New Town Guangzhou",
+  "assets/images/activities/guangzhou-opera-house.svg": "Guangzhou Opera House",
+  "assets/images/activities/liede-bridge.svg": "Liede Bridge Guangzhou night",
+  "assets/images/activities/sacred-heart-cathedral.svg": "Sacred Heart Cathedral Guangzhou",
+  "assets/images/activities/liurong-temple.svg": "Liurong Temple Guangzhou",
+  "assets/images/activities/teemall.svg": "Beijing Road Guangzhou shopping",
+  "assets/images/activities/dafo-temple.svg": "Dafo Temple Guangzhou",
+  "assets/images/activities/yong-qing-fang.svg": "Yongqingfang Guangzhou",
 
   "assets/images/restaurants/tao-tao-ju.svg": "Taotaoju Guangzhou",
   "assets/images/restaurants/panxi.svg": "Panxi Restaurant Guangzhou",
@@ -55,9 +65,17 @@ const SLOTS = {
   "assets/images/restaurants/shamian-cafe.svg": "Cafe terrace Guangzhou",
   "assets/images/restaurants/litchi-bay.svg": "Lychee Bay Guangzhou",
   "assets/images/restaurants/noodle-bar.svg": "Wonton noodles Cantonese",
+  "assets/images/restaurants/dian-dou-de.svg": "Dim Dou De Guangzhou",
+  "assets/images/restaurants/heytea-lab.svg": "HEYTEA store",
+  "assets/images/restaurants/nap-cafe-lab.svg": "Minimalist coffee cafe",
+  "assets/images/restaurants/wentongs.svg": "Cafe interior Guangzhou",
+  "assets/images/restaurants/hakka-yu.svg": "Hakka cuisine restaurant",
+  "assets/images/restaurants/tao-tao-ju-teemall.svg": "Taotaoju Guangzhou",
+  "assets/images/restaurants/da-ge-fan.svg": "Cantonese roast pigeon restaurant",
+  "assets/images/restaurants/the-raw.svg": "Health food cafe",
 
-  "assets/images/hotels/grand-tianhe.svg": "Hotel lobby modern",
-  "assets/images/hotels/baiyun-airport.svg": "Hotel room twin beds"
+  "assets/images/hotels/grand-tianhe.svg": "City Comfort Inn Guangzhou",
+  "assets/images/hotels/baiyun-airport.svg": "Guangzhou Baiyun Airport hotel"
 };
 
 /* Commons marks unfree files; never ship those. */
