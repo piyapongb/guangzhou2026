@@ -66,36 +66,6 @@ window.RESTAURANTS_DATA = [
     ]
   },
   {
-    id: "restaurant-004",
-    zone: "Tianhe",
-    name: "Shunfeng Seafood",
-    nameZh: "顺风海鲜舫",
-    image: "assets/images/restaurants/shunfeng.svg",
-    gallery: [],
-    cuisine: ["Seafood", "Cantonese"],
-    description:
-      "ร้านอาหารทะเลสไตล์กวางตุ้ง เลือกวัตถุดิบสดจากตู้ปลาได้เอง เหมาะกับมื้อพิเศษ",
-    address: "1 Huacheng Avenue, Tianhe District, Guangzhou",
-    price: "¥150–300",
-    recommendedDishes: ["Steamed Garoupa", "Salt-baked Prawns", "Typhoon Shelter Crab"],
-    links: []
-  },
-  {
-    id: "restaurant-005",
-    zone: "Yuexiu",
-    name: "Guangzhou Restaurant",
-    nameZh: "广州酒家",
-    image: "assets/images/restaurants/guangzhou-restaurant.svg",
-    gallery: [],
-    cuisine: ["Cantonese", "Dim Sum"],
-    description:
-      "หนึ่งในภัตตาคารที่มีชื่อเสียงที่สุดของกวางโจว รสชาติต้นตำรับกวางตุ้งดั้งเดิม",
-    address: "2 Wenchang South Road, Liwan District, Guangzhou",
-    price: "¥90–160",
-    recommendedDishes: ["Roast Goose", "Pan-fried Radish Cake", "Almond Cream"],
-    links: []
-  },
-  {
     id: "restaurant-006",
     zone: "Yuexiu",
     name: "Beijing Road Snack Alley",
@@ -108,21 +78,6 @@ window.RESTAURANTS_DATA = [
     address: "Beijing Road Pedestrian Street, Yuexiu District, Guangzhou",
     price: "¥15–40",
     recommendedDishes: ["Stinky Tofu", "Rice Noodle Rolls", "Sugar Cane Juice"],
-    links: []
-  },
-  {
-    id: "restaurant-008",
-    zone: "Haizhu",
-    name: "Litchi Bay Seafood House",
-    nameZh: "荔湾海鲜楼",
-    image: "assets/images/restaurants/litchi-bay.svg",
-    gallery: [],
-    cuisine: ["Seafood"],
-    description:
-      "ร้านอาหารทะเลใกล้แม่น้ำจูเจียง เหมาะสำหรับมื้อเย็นก่อนหรือหลังล่องเรือ",
-    address: "18 Binjiang Road, Haizhu District, Guangzhou",
-    price: "¥120–220",
-    recommendedDishes: ["Steamed Scallops", "Black Pepper Squid", "Congee"],
     links: []
   },
   {
