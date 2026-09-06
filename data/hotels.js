@@ -17,7 +17,7 @@ window.HOTELS_DATA = [
   {
     id: "hotel-002",
     stayFrom: "2026-10-23",
-    stayTo: "2026-10-26",
+    stayTo: "2026-10-25",
     name: "City Comfort Inn (Guangzhou Luyuan Road Taojin Metro Station)",
     nameZh: "城市便捷酒店(广州麓苑路淘金地铁站店)",
     image: "assets/images/hotels/hotel-002.png",
