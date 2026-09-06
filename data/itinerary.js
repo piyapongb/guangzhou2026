@@ -80,7 +80,7 @@ window.ITINERARY_DATA = [
         titleZh: "退房",
         icon: "hotel",
         details: {
-          description: "เช็คเอาท์จาก Baiyun Airport Konggang Hotel นั่งรถรับส่งฟรีเข้าเมือง",
+          description: "เช็คเอาท์จาก Baiyun Airport Konggang Hotel",
           location: "Baiyun Airport Konggang Hotel, near Guangzhou Baiyun International Airport"
         }
       },
@@ -93,7 +93,7 @@ window.ITINERARY_DATA = [
         icon: "hotel",
         details: {
           description:
-            "ฝากกระเป๋าที่ City Comfort Inn (麓苑路淘金地铁站店) ก่อนถึงเวลาเช็คอินจริง แล้วออกไปเที่ยวตัวเบา",
+            "ฝากกระเป๋าที่ City Comfort Inn (麓苑路淘金地铁站店) ก่อนถึงเวลาเช็คอินจริง",
           location: "City Comfort Inn, Luyuan Road, near Taojin Metro Station"
         }
       },
@@ -201,7 +201,7 @@ window.ITINERARY_DATA = [
         thumbnail: "assets/images/activities/d3-hongcheng-park.png",
         icon: "park",
         details: {
-          description: "สวนสาธารณะเงียบสงบ เหมาะกับเดินเล่นพักผ่อนก่อนไปต่อจุดถัดไป",
+          description: "สวนสาธารณะเงียบสงบ เหมาะกับเดินเล่นพักผ่อน",
           location: "Tianhe District, Guangzhou",
           entranceFee: "Free"
         }
@@ -377,7 +377,7 @@ window.ITINERARY_DATA = [
         icon: "shopping",
         details: {
           description:
-            "แวะเดินเล่นชอปปิ้งรอบสุดท้ายก่อนกลับ ถนนคนเดินคึกคักที่สุดแห่งหนึ่งของกวางโจวยามค่ำ",
+            "เดินเล่นชอปปิ้งรอบสุดท้ายก่อนกลับ ถนนคนเดินคึกคักที่สุดแห่งหนึ่งของกวางโจวยามค่ำ",
           location: "Beijing Road, Yuexiu District",
           metroStation: "Gongyuanqian",
           metroExit: "B"
@@ -392,12 +392,12 @@ window.ITINERARY_DATA = [
         icon: "flight",
         details: {
           description:
-            "ออกเดินทางจากที่พักไปยังสนามบินนานาชาติกวางโจวไป๋หวิน เผื่อเวลาเช็คอินสำหรับเที่ยวบินเช้ามืดวันถัดไป",
+            "ออกเดินทางจากที่พักไปยังสนามบินนานาชาติกวางโจวไป๋หวิน",
           location: "Guangzhou Baiyun International Airport"
         }
       }
     ]
-  },
+  },`
   {
     id: "day-5",
     dayNumber: 5,
