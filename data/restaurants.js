@@ -18,7 +18,7 @@ window.RESTAURANTS_DATA = [
     zone: "Liwan",
     name: "Tao Tao Ju",
     nameZh: "陶陶居",
-    image: "assets/images/restaurants/tao-tao-ju.svg",
+    image: "assets/images/restaurants/restaurant-001.png",
     gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
@@ -37,7 +37,7 @@ window.RESTAURANTS_DATA = [
     zone: "Liwan",
     name: "Panxi Restaurant",
     nameZh: "泮溪酒家",
-    image: "assets/images/restaurants/panxi.svg",
+    image: "assets/images/restaurants/restaurant-002.png",
     gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
@@ -52,7 +52,7 @@ window.RESTAURANTS_DATA = [
     zone: "Yuexiu",
     name: "Beijing Road Snack Alley",
     nameZh: "北京路小食街",
-    image: "assets/images/restaurants/street-food.svg",
+    image: "assets/images/restaurants/restaurant-006.png",
     gallery: [],
     cuisine: ["Street Food"],
     description:
@@ -67,7 +67,7 @@ window.RESTAURANTS_DATA = [
     zone: "Tianhe",
     name: "Tianhe Noodle Bar",
     nameZh: "天河面馆",
-    image: "assets/images/restaurants/noodle-bar.svg",
+    image: "assets/images/restaurants/restaurant-009.png",
     gallery: [],
     cuisine: ["Noodles"],
     description:
@@ -82,7 +82,7 @@ window.RESTAURANTS_DATA = [
     zone: "Liwan",
     name: "Dian Dou De (Xinghuan / Big Treehouse Branch)",
     nameZh: "点都德(星寰店/大树下总店)",
-    image: "assets/images/restaurants/dian-dou-de.svg",
+    image: "assets/images/restaurants/restaurant-010.png",
     gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
@@ -99,7 +99,7 @@ window.RESTAURANTS_DATA = [
     zone: "Yuexiu",
     name: "HEYTEA Lab",
     nameZh: "喜茶 LAB",
-    image: "assets/images/restaurants/heytea-lab.svg",
+    image: "assets/images/restaurants/restaurant-011.png",
     gallery: [],
     cuisine: ["Cafe", "Tea"],
     description:
@@ -116,7 +116,7 @@ window.RESTAURANTS_DATA = [
     zone: "Yuexiu",
     name: "Nap Cafe Lab",
     nameZh: "Nap Cafe Lab",
-    image: "assets/images/restaurants/nap-cafe-lab.svg",
+    image: "assets/images/restaurants/restaurant-012.png",
     gallery: [],
     cuisine: ["Cafe"],
     description:
@@ -131,7 +131,7 @@ window.RESTAURANTS_DATA = [
     zone: "Yuexiu",
     name: "Wentong's",
     nameZh: "文通冰室",
-    image: "assets/images/restaurants/wentongs.svg",
+    image: "assets/images/restaurants/restaurant-013.png",
     gallery: [],
     cuisine: ["Cha Chaan Teng", "Hong Kong Style", "Cafe"],
     description:
@@ -146,7 +146,7 @@ window.RESTAURANTS_DATA = [
     zone: "Yuexiu",
     name: "Hakka Yu",
     nameZh: "客家渔",
-    image: "assets/images/restaurants/hakka-yu.svg",
+    image: "assets/images/restaurants/restaurant-014.png",
     gallery: [],
     cuisine: ["Local Cuisine", "Hakka"],
     description:
@@ -161,7 +161,7 @@ window.RESTAURANTS_DATA = [
     zone: "Yuexiu",
     name: "Tao Tao Ju (Teemall Beijing Lu Branch)",
     nameZh: "陶陶居(北京路天汇店)",
-    image: "assets/images/restaurants/tao-tao-ju-teemall.svg",
+    image: "assets/images/restaurants/restaurant-015.png",
     gallery: [],
     cuisine: ["Cantonese", "Dim Sum"],
     description:
@@ -178,7 +178,7 @@ window.RESTAURANTS_DATA = [
     zone: "Yuexiu",
     name: "Da Ge Fan (Beijing Road Branch)",
     nameZh: "大鸽饭(北京路店)",
-    image: "assets/images/restaurants/da-ge-fan.svg",
+    image: "assets/images/restaurants/restaurant-016.png",
     gallery: [],
     cuisine: ["Local Cuisine", "Cantonese"],
     description:
@@ -195,7 +195,7 @@ window.RESTAURANTS_DATA = [
     zone: "Yuexiu",
     name: "The raw",
     nameZh: "The raw",
-    image: "assets/images/restaurants/the-raw.svg",
+    image: "assets/images/restaurants/restaurant-017.png",
     gallery: [],
     cuisine: ["Cafe"],
     description:
