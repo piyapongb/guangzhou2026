@@ -382,6 +382,19 @@ window.ITINERARY_DATA = [
           metroStation: "Gongyuanqian",
           metroExit: "B"
         }
+      },
+      {
+        id: "d4-airport-transfer",
+        type: "other",
+        time: "22:30",
+        title: "Travel to Airport",
+        titleZh: "前往机场",
+        icon: "flight",
+        details: {
+          description:
+            "ออกเดินทางจากที่พักไปยังสนามบินนานาชาติกวางโจวไป๋หวิน เผื่อเวลาเช็คอินสำหรับเที่ยวบินเช้ามืดวันถัดไป",
+          location: "Guangzhou Baiyun International Airport"
+        }
       }
     ]
   },
