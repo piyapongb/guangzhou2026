@@ -73,6 +73,26 @@ lat/lon right (Google Maps right-click → the numbers at the top of the
 context menu). For a new trip, replace or add entries here and repoint each
 day's `locationId`.
 
+**Multi-city trips within a single itinerary are already fully supported —
+this is per-day, not per-trip.** Add one entry per city, then give each day
+whichever `locationId` matches where that day actually happens:
+```js
+// data/locations.js
+window.LOCATIONS_DATA = {
+  guangzhou: { name: "Guangzhou", lat: 23.1291, lon: 113.2644 },
+  shanghai:  { name: "Shanghai",  lat: 31.2304, lon: 121.4737 }
+};
+```
+```js
+// data/itinerary.js
+{ id: "day-1", date: "2026-10-22", locationId: "guangzhou", ... }
+{ id: "day-2", date: "2026-10-23", locationId: "shanghai",  ... }
+```
+Each day fetches weather for its own city independently; two days sharing
+a city+date-range share one request (see "Weather system"). No other file
+needs to change — `hydrateWeather` in `app.js` reads `locationId` per day
+already, nothing there assumes one city per trip.
+
 ### `data/itinerary.js`
 Array of day objects (`id`, `dayNumber`, `date`, `locationId`, `weather`
 fallback block, `items[]`). Item `type` is one of `activity | restaurant |
