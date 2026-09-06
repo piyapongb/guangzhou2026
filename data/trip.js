@@ -9,7 +9,7 @@ window.TRIP_DATA = {
   destination: "Guangzhou, China",
   startDate: "2026-10-22",
   endDate: "2026-10-26",
-  heroImage: "assets/images/hero.svg",
+  heroImage: "assets/images/hero.png",
   heroImageAlt: "Canton Tower and the Pearl River skyline at dusk",
   days: ["day-1", "day-2", "day-3", "day-4", "day-5"]
 };
