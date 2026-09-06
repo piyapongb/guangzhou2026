@@ -212,7 +212,7 @@ window.ITINERARY_DATA = [
         time: "12:00",
         title: "Parc Central",
         titleZh: "天环广场",
-        thumbnail: "assets/images/activities/d3-parc-central.png",
+        thumbnail: "assets/images/activities/d3-parc-central.jpg",
         icon: "shopping",
         details: {
           description:
@@ -397,7 +397,7 @@ window.ITINERARY_DATA = [
         }
       }
     ]
-  },`
+  },
   {
     id: "day-5",
     dayNumber: 5,
