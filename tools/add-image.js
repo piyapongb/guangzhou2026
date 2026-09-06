@@ -8,12 +8,14 @@
  *   node tools/add-image.js ~/Downloads/pic.jpg restaurant-011 --gallery
  *   node tools/add-image.js ~/Downloads/pic.jpg d2-chen-clan
  *   node tools/add-image.js ~/Downloads/pic.jpg hotel-002 --force
+ *   node tools/add-image.js ~/Downloads/pic.jpg hero        the header/cover photo
  *
  * What it does:
  *   1. Looks up <id> in data/restaurants.js, data/hotels.js, and
  *      data/itinerary.js to find which one owns it and which field that
  *      record uses (`image` for restaurants/hotels, `thumbnail` for
- *      itinerary stops).
+ *      itinerary stops). The one exception is the special id "hero",
+ *      which always means the site's header/cover photo in data/trip.js.
  *   2. Copies your file into the matching assets/images/<category>/
  *      folder as <id>.<ext> (e.g. restaurant-011.jpg) - a fixed,
  *      predictable name, so re-running the same command later just
@@ -34,10 +36,13 @@ const ALLOWED_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"]);
 const CREDITS_FILE = path.join(ROOT, "assets/images/CREDITS.md");
 
 const SOURCES = [
-  { file: "data/restaurants.js", global: "RESTAURANTS_DATA", category: "restaurants", field: "image", label: "restaurant" },
-  { file: "data/hotels.js", global: "HOTELS_DATA", category: "hotels", field: "image", label: "hotel" },
-  { file: "data/itinerary.js", global: "ITINERARY_DATA", category: "activities", field: "thumbnail", label: "itinerary stop" }
+  { file: "data/restaurants.js", global: "RESTAURANTS_DATA", dir: "assets/images/restaurants", field: "image", label: "restaurant" },
+  { file: "data/hotels.js", global: "HOTELS_DATA", dir: "assets/images/hotels", field: "image", label: "hotel" },
+  { file: "data/itinerary.js", global: "ITINERARY_DATA", dir: "assets/images/activities", field: "thumbnail", label: "itinerary stop" }
 ];
+
+const TRIP_FILE = "data/trip.js";
+const HERO_SOURCE = { file: TRIP_FILE, dir: "assets/images", field: "heroImage", label: "hero image" };
 
 function loadDataGlobal(relPath, globalName) {
   const sandbox = { window: {} };
@@ -57,6 +62,11 @@ function flattenItinerary(days) {
 }
 
 function findTarget(id) {
+  if (id === "hero") {
+    const trip = loadDataGlobal(TRIP_FILE, "TRIP_DATA");
+    return { source: HERO_SOURCE, record: trip };
+  }
+
   const restaurants = loadDataGlobal("data/restaurants.js", "RESTAURANTS_DATA");
   const hit1 = restaurants.find(function (r) { return r.id === id; });
   if (hit1) return { source: SOURCES[0], record: hit1 };
@@ -74,7 +84,11 @@ function findTarget(id) {
 }
 
 function listAll() {
-  console.log("Restaurants (data/restaurants.js):");
+  const trip = loadDataGlobal(TRIP_FILE, "TRIP_DATA");
+  console.log("Site header (data/trip.js):");
+  console.log("  " + "hero".padEnd(16) + "Cover photo" + (trip.heroImage ? "" : "   (no image yet)"));
+
+  console.log("\nRestaurants (data/restaurants.js):");
   loadDataGlobal("data/restaurants.js", "RESTAURANTS_DATA").forEach(function (r) {
     console.log("  " + r.id.padEnd(16) + r.name + (r.image ? "" : "   (no image yet)"));
   });
@@ -97,6 +111,15 @@ function listAll() {
 function rewriteField(relPath, id, field, newPath, isGalleryPush) {
   const full = path.join(ROOT, relPath);
   const src = fs.readFileSync(full, "utf8");
+
+  // trip.js holds one plain object, not an array of id-tagged records, so
+  // there's nothing to bound the edit to - just replace its one field.
+  if (relPath === TRIP_FILE) {
+    const fieldRegex = new RegExp(field + ':\\s*"[^"]*"');
+    if (!fieldRegex.test(src)) throw new Error("Could not find `" + field + "` in " + relPath + ".");
+    fs.writeFileSync(full, src.replace(fieldRegex, field + ': "' + newPath + '"'));
+    return;
+  }
 
   const idIndex = src.indexOf('id: "' + id + '"');
   if (idIndex === -1) throw new Error("Could not relocate id \"" + id + "\" for rewriting.");
@@ -209,7 +232,7 @@ function main() {
     console.warn("Note: flight timeline cards never show a thumbnail, so this photo will be saved but won't appear anywhere.");
   }
 
-  const destRelDir = "assets/images/" + target.source.category;
+  const destRelDir = target.source.dir;
   const destRelPath = destRelDir + "/" + id + ext;
   const destAbsPath = path.join(ROOT, destRelPath);
 
