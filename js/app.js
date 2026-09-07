@@ -14,7 +14,6 @@
   };
 
   let restaurantIndex = {};
-  let copyResetTimer = null;
 
   /* ---------- Bootstrap ---------- */
 
@@ -29,7 +28,7 @@
 
     document.getElementById("hero-root").appendChild(C.renderHero(trip));
 
-    document.title = trip.title + " — Travel Itinerary";
+    applyTripChrome(trip);
 
     renderTabs();
     renderItineraryPanel(days, restaurantIndex);
@@ -48,6 +47,29 @@
     initDayObserver(days);
     initStickyOffsets();
     hydrateWeather(days);
+  }
+
+  /**
+   * Everything outside the hero that names the trip: page title, header
+   * brand mark, footer, and the meta description used by link previews.
+   * Driven from trip.js so reusing this template stays a data-only edit.
+   */
+  function applyTripChrome(trip) {
+    const title = trip.title || "Travel Itinerary";
+    document.title = title + " — Travel Itinerary";
+
+    const brand = document.getElementById("brand-title");
+    if (brand) brand.textContent = title;
+
+    const footer = document.getElementById("footer-title");
+    if (footer) footer.textContent = title;
+
+    const meta = document.getElementById("meta-description");
+    if (meta) {
+      meta.setAttribute("content",
+        "A compact, mobile-first travel itinerary: day-by-day schedule, " +
+        "restaurants, and hotels for " + title + ".");
+    }
   }
 
   /* ---------- Weather (Open-Meteo, progressive enhancement) ---------- */
@@ -163,7 +185,10 @@
   function renderItineraryPanel(days, restaurantIndexMap) {
     const panel = document.getElementById("panel-itinerary");
     U.clear(panel);
-    if (!days.length) return;
+    if (!days.length) {
+      panel.appendChild(U.el("p", { class: "empty-note" }, ["No days yet — add them to data/itinerary.js."]));
+      return;
+    }
 
     panel.appendChild(C.renderDayNav(days, days[0].id));
     const daysWrap = U.el("div", { class: "days-wrap" });
@@ -338,7 +363,10 @@
   function renderHotelsPanel(hotels) {
     const panel = document.getElementById("panel-hotels");
     U.clear(panel);
-    if (!hotels.length) return;
+    if (!hotels.length) {
+      panel.appendChild(U.el("p", { class: "empty-note" }, ["No hotels yet — add them to data/hotels.js."]));
+      return;
+    }
     const list = U.el("div", { class: "hotel-list" });
     hotels.forEach(function (hotel) {
       list.appendChild(C.renderHotelCard(hotel));

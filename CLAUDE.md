@@ -61,9 +61,18 @@ file itself is the source of truth.
 
 ### `data/trip.js`
 Single object, not an array. Title, destination, date range, hero image
-(`heroImage` / `heroImageAlt`), and the ordered list of day ids that
-`itinerary.js` must supply. **This is the file to edit first when copying
-the template for a new trip** — new title, dates, hero image, destination.
+(`heroImage` / `heroImageAlt`). **This is the file to edit first when
+copying the template for a new trip** — new title, dates, hero image,
+destination.
+
+`title` is the single source for every place the trip is named: the
+browser tab, the header brand mark, the footer, and the `<meta name=
+"description">` that link previews use when the GitHub Pages URL is
+shared. `applyTripChrome()` in `app.js` writes all four at load; the text
+sitting in `index.html` is only a trip-neutral pre-JS fallback, so don't
+hand-edit it per trip. There is deliberately **no `days` array here** —
+the day list lives in `itinerary.js` alone; duplicating it here just
+invited drift (it was inert config that nothing read).
 
 ### `data/locations.js`
 A keyed map (`{ cityKey: { name, lat, lon } }`), not an array. Every day in
@@ -272,6 +281,13 @@ Checklist, in order:
 6. If the owner wants a shareable link: GitHub Pages → Settings → Pages →
    point at whichever branch actually has this content (see "Repository /
    branch structure" — it is very unlikely to be `main`).
+
+Gutting all four data files at once is a supported starting state, not a
+broken one: with empty arrays the app still boots clean (no console
+errors, tabs still switch, hero/title/footer all read from `trip.js`) and
+each panel shows a "add them to data/…" note rather than a blank void.
+Verified by actually emptying every data file and loading the page, so
+step 1 above can safely be "delete everything, then build it back up."
 
 ## Known gotchas (learned the hard way — don't reintroduce these)
 
