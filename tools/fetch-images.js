@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 /**
- * Replace the placeholder SVGs with real photos from Wikimedia Commons.
+ * Fill in a real photo from Wikimedia Commons for a placeholder that's
+ * still a generic icon (no photo yet). NOT for replacing a photo that
+ * already exists — use tools/add-image.js for that (a local file you
+ * already have) or re-run this with --force for a fresh Commons search.
  *
- *   node tools/fetch-images.js --list          show the search terms, fetch nothing
+ *   node tools/fetch-images.js --list          show configured slots, fetch nothing
  *   node tools/fetch-images.js --dry-run       resolve photos, report, download nothing
  *   node tools/fetch-images.js                 download and rewrite the data files
- *   node tools/fetch-images.js canton-tower    just one slot
- *   node tools/fetch-images.js canton-tower --search "Canton Tower night"
+ *   node tools/fetch-images.js some-id         just one slot
+ *   node tools/fetch-images.js some-id --search "more specific search term"
  *
  * Photos are searched by name through the Commons API rather than pinned to
  * fixed URLs, so nothing here goes stale when a file is renamed upstream.
@@ -20,6 +23,17 @@
  * download is recorded in assets/images/CREDITS.md with its author, licence
  * and source page. Keep that file with the project. Anything marked
  * "non-free" or with no licence is skipped rather than guessed at.
+ *
+ * SLOTS is empty by design — every item in this trip already has a real
+ * photo (added via add-image.js), so there's nothing left to fetch. Add one
+ * entry per item that still needs a photo, keyed by the *exact path that
+ * item's `image`/`thumbnail`/`heroImage` field currently points at* (check
+ * the relevant data/*.js file — for a new trip that's usually still the
+ * placeholder path you gave it, e.g. "assets/images/activities/my-new-stop.svg"):
+ *   const SLOTS = {
+ *     "assets/images/activities/my-new-stop.svg": "Search term for Commons",
+ *     ...
+ *   };
  */
 "use strict";
 
@@ -31,52 +45,9 @@ const API = "https://commons.wikimedia.org/w/api.php";
 const IMAGE_WIDTH = 1600;
 const CREDITS_FILE = path.join(ROOT, "assets/images/CREDITS.md");
 
-/* Placeholder to replace -> what to search Commons for.
-   Edit a term here (or pass --search) if a result comes back wrong. */
-const SLOTS = {
-  "assets/images/hero.svg": "Guangzhou skyline",
-
-  "assets/images/activities/canton-tower.svg": "Canton Tower Guangzhou",
-  "assets/images/activities/chen-clan-academy.svg": "Chen Clan Ancestral Hall",
-  "assets/images/activities/shamian-island.svg": "Shamian Island Guangzhou",
-  "assets/images/activities/yuexiu-park.svg": "Yuexiu Park Guangzhou",
-  "assets/images/activities/beijing-road.svg": "Beijing Road Guangzhou",
-  "assets/images/activities/haixinsha.svg": "Haixinsha Guangzhou",
-  "assets/images/activities/pearl-river-cruise.svg": "Pearl River Guangzhou night",
-  "assets/images/activities/shopping.svg": "Tianhe Road Guangzhou",
-  "assets/images/activities/haixin-bridge.svg": "Haixinsha Bridge Guangzhou",
-  "assets/images/activities/hongcheng-park.svg": "Park Guangzhou Tianhe",
-  "assets/images/activities/parc-central.svg": "Zhujiang New Town Guangzhou",
-  "assets/images/activities/guangzhou-opera-house.svg": "Guangzhou Opera House",
-  "assets/images/activities/liede-bridge.svg": "Liede Bridge Guangzhou night",
-  "assets/images/activities/sacred-heart-cathedral.svg": "Sacred Heart Cathedral Guangzhou",
-  "assets/images/activities/liurong-temple.svg": "Liurong Temple Guangzhou",
-  "assets/images/activities/teemall.svg": "Beijing Road Guangzhou shopping",
-  "assets/images/activities/dafo-temple.svg": "Dafo Temple Guangzhou",
-  "assets/images/activities/yong-qing-fang.svg": "Yongqingfang Guangzhou",
-
-  "assets/images/restaurants/tao-tao-ju.svg": "Taotaoju Guangzhou",
-  "assets/images/restaurants/panxi.svg": "Panxi Restaurant Guangzhou",
-  "assets/images/restaurants/guangzhou-restaurant.svg": "Guangzhou Restaurant Wenchang",
-  "assets/images/restaurants/dimsum-alt.svg": "Dim sum Cantonese",
-  "assets/images/restaurants/haidilao.svg": "Haidilao hot pot",
-  "assets/images/restaurants/shunfeng.svg": "Cantonese seafood restaurant",
-  "assets/images/restaurants/street-food.svg": "Chinese street food stall",
-  "assets/images/restaurants/shamian-cafe.svg": "Cafe terrace Guangzhou",
-  "assets/images/restaurants/litchi-bay.svg": "Lychee Bay Guangzhou",
-  "assets/images/restaurants/noodle-bar.svg": "Wonton noodles Cantonese",
-  "assets/images/restaurants/dian-dou-de.svg": "Dim Dou De Guangzhou",
-  "assets/images/restaurants/heytea-lab.svg": "HEYTEA store",
-  "assets/images/restaurants/nap-cafe-lab.svg": "Minimalist coffee cafe",
-  "assets/images/restaurants/wentongs.svg": "Cafe interior Guangzhou",
-  "assets/images/restaurants/hakka-yu.svg": "Hakka cuisine restaurant",
-  "assets/images/restaurants/tao-tao-ju-teemall.svg": "Taotaoju Guangzhou",
-  "assets/images/restaurants/da-ge-fan.svg": "Cantonese roast pigeon restaurant",
-  "assets/images/restaurants/the-raw.svg": "Health food cafe",
-
-  "assets/images/hotels/grand-tianhe.svg": "City Comfort Inn Guangzhou",
-  "assets/images/hotels/baiyun-airport.svg": "Guangzhou Baiyun Airport hotel"
-};
+/* Placeholder to replace -> what to search Commons for. Empty until the
+   next trip adds items that need one — see the file header comment. */
+const SLOTS = {};
 
 /* Commons marks unfree files; never ship those. */
 const BLOCKED_LICENCES = /non-?free|fair use|copyright/i;
@@ -190,15 +161,21 @@ async function main() {
   const opts = parseArgs(process.argv.slice(2));
   const targets = slotsFor(opts.only);
 
-  if (!targets.length) {
-    console.error("No slot matched. Run with --list to see the available names.");
-    process.exit(1);
-  }
-
   if (opts.list) {
+    if (!Object.keys(SLOTS).length) {
+      console.log("SLOTS is empty — every current item already has a photo. See this file's header comment for how to add an entry when a new item needs one.");
+      return;
+    }
     console.log("Slots and their search terms:\n");
     targets.forEach(function (t) { console.log("  " + t + "\n      -> " + SLOTS[t]); });
     return;
+  }
+
+  if (!targets.length) {
+    console.error(Object.keys(SLOTS).length
+      ? "No slot matched. Run with --list to see the available names."
+      : "SLOTS is empty — nothing to fetch. See this file's header comment for how to add an entry.");
+    process.exit(1);
   }
 
   if (opts.search && targets.length !== 1) {

@@ -196,6 +196,14 @@ manually, use these instead:
   results even when they're the best match, and writes attribution to
   `assets/images/CREDITS.md` (keep that file — most Commons licenses
   require it). Has `--list` / `--dry-run` / `--search "override term"`.
+  **Its `SLOTS` map ships empty and has to be hand-filled per trip** — it's
+  a plain object of `{ placeholder-path: "search term" }` at the top of the
+  file, not auto-discovered from the data files the way `add-image.js`'s id
+  list is. Add one entry per new item that still needs a photo (path must
+  match exactly what that item's `image`/`thumbnail` field currently
+  points at), run the tool, then clear `SLOTS` back to `{}` once everything
+  it covers has a real photo — a stale entry just wastes a Commons search
+  and updates nothing (see gotchas).
 
 **Watch image file sizes.** Neither script resizes what you feed it. A
 phone photo can be tens of megabytes; these thumbnails render at ~60-400px
@@ -287,6 +295,17 @@ Checklist, in order:
   `fetch-images.js` resizes anything; a full-resolution phone photo used
   as a 68px timeline thumbnail is pure waste and slows the page down for
   every visitor.
+- **A `fetch-images.js` `SLOTS` entry left in place after its photo is
+  already real does nothing useful.** The rewrite step matches by exact
+  path string — once `add-image.js` (or a prior `fetch-images.js` run)
+  repoints a field at a new filename, the old placeholder path in `SLOTS`
+  no longer matches anything in the data files. Running it anyway still
+  downloads a real photo and reports success, but "0 data file(s) updated"
+  — the photo lands on disk with nothing pointing at it, and the search
+  hit the network for nothing. Happened to every entry in this file's
+  `SLOTS` map at once after a batch of `add-image.js` runs; fixed by
+  clearing `SLOTS` back to empty. Delete a `SLOTS` entry as soon as the
+  item it covers has a real photo, don't leave it "just in case."
 - **Never delete a restaurant without checking `itinerary.js` first** —
   `restaurantId` / `nearbyRestaurantIds` references to a missing id log a
   console warning (not a crash), but the referencing item then quietly
