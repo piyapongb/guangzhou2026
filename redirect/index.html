@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>เว็บไซต์ย้ายไปที่อยู่ใหม่</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #12263f;
+    --muted: #5a6b82;
+    --brand: #0b63c5;
+    --brand-dark: #084a95;
+    --border: #dde5ef;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Noto Sans Thai", "Sarabun", "Segoe UI", Tahoma, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .card { max-width: 460px; width: 100%; }
+  .icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #e8f1fc;
+    color: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .icon svg { width: 28px; height: 28px; }
+  h1 { font-size: 20px; line-height: 1.4; margin: 0 0 10px; }
+  p { margin: 0 0 8px; font-size: 15px; line-height: 1.6; color: var(--muted); }
+  .newurl {
+    display: block;
+    margin: 14px 0 18px;
+    padding: 10px 12px;
+    background: #f5f8fc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+    color: var(--brand-dark);
+    word-break: break-all;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .newurl:hover { background: #eaf2fb; }
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--brand);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--brand-dark); }
+  .countdown {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--muted);
+    min-height: 20px;
+  }
+  .countdown b { color: var(--brand-dark); font-size: 16px; }
+  .cancel {
+    display: block;
+    margin: 6px auto 0;
+    /* ต้องประกาศเอง เพราะ display:block ข้างบนทับค่า hidden ของเบราว์เซอร์ */
+    background: none;
+    border: 0;
+    padding: 4px;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .cancel[hidden] { display: none; }
+  .bar {
+    height: 4px;
+    width: 100%;
+    margin-top: 16px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .bar > span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--brand);
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform 1s linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131a24; --fg: #eaf1f8; --muted: #a5b4c6;
+      --brand: #4d9df0; --brand-dark: #7bb8f5; --border: #2a3542;
+    }
+    .icon { background: #1c2836; }
+    .newurl { background: #1a2430; }
+    .btn { color: #08111c; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12h14"></path><path d="M13 6l6 6-6 6"></path>
+      </svg>
+    </div>
+
+    <h1>เราย้ายเว็บไซต์ไปที่อยู่ใหม่แล้ว</h1>
+    <p>เว็บไซต์นี้ได้ย้ายไปยังที่อยู่ใหม่ กรุณาใช้ลิงก์ด้านล่างแทน</p>
+
+    <a class="newurl" id="newUrlLink" href="#" target="_top" rel="noopener">&hellip;</a>
+
+    <a class="btn" id="goNow" href="#" target="_top" rel="noopener">ไปเว็บไซต์ใหม่ตอนนี้</a>
+
+    <div class="countdown" id="countdown"></div>
+    <button class="cancel" id="cancel" type="button" hidden>ยกเลิกการเปลี่ยนหน้าอัตโนมัติ</button>
+
+    <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---- ตั้งค่าได้ตรงนี้ ------------------------------------------------ */
+  var TARGET_URL = "http://agg2.egat.co.th/";  // เว็บใหม่ที่จะวิ่งไป
+  var SECONDS    = 5;                          // นับถอยหลังกี่วินาที
+  /* --------------------------------------------------------------------- */
+
+  // เว็บเก่าส่งค่ามาทาง query string ก็ได้ (ไม่ส่งก็ใช้ค่าด้านบน) เช่น
+  //   redirect/index.html?url=https://example.com&sec=8
+  try {
+    var qs = new URLSearchParams(window.location.search);
+    var qUrl = qs.get("url");
+    var qSec = parseInt(qs.get("sec"), 10);
+    if (qUrl && /^https?:\/\//i.test(qUrl)) { TARGET_URL = qUrl; }
+    if (!isNaN(qSec) && qSec >= 0 && qSec <= 60) { SECONDS = qSec; }
+  } catch (e) { /* เบราว์เซอร์เก่ามาก — ใช้ค่า default */ }
+
+  var link      = document.getElementById("newUrlLink");
+  var goNow     = document.getElementById("goNow");
+  var countdown = document.getElementById("countdown");
+  var cancelBtn = document.getElementById("cancel");
+  var bar       = document.getElementById("bar");
+
+  link.href = TARGET_URL;
+  link.textContent = TARGET_URL;
+  goNow.href = TARGET_URL;
+
+  // พาทั้งหน้าไปเว็บใหม่ ไม่ใช่แค่ในกรอบ iframe — ไล่ลองทีละวิธี:
+  //   1. postMessage บอกเว็บเก่าให้พาไปเอง (ใช้ได้แม้อยู่คนละโดเมน
+  //      ถ้าเว็บเก่าวาง embed-snippet.html ไว้ ซึ่งมีตัวรับ message อยู่แล้ว)
+  //   2. เขียน window.top ตรง ๆ (ใช้ได้เมื่ออยู่โดเมนเดียวกัน)
+  //   3. เปลี่ยนหน้าใน iframe ตัวเอง — อย่างน้อยผู้ใช้ก็เห็นเว็บใหม่ในกรอบ
+  // ส่วนลิงก์/ปุ่มที่ผู้ใช้กดเองมี target="_top" อยู่แล้ว จึงพาไปทั้งหน้าได้
+  // ตามปกติแม้ข้ามโดเมน
+  function redirect() {
+    var inFrame = false;
+    try { inFrame = window.top !== window.self; } catch (e) { inFrame = true; }
+
+    if (inFrame) {
+      try {
+        window.parent.postMessage(
+          { type: "site-moved-redirect", url: TARGET_URL }, "*"
+        );
+      } catch (e) { /* ไม่เป็นไร ลองวิธีถัดไป */ }
+
+      try {
+        window.top.location.href = TARGET_URL;
+        return;
+      } catch (e) { /* cross-origin — ตกไปใช้ fallback ข้างล่าง */ }
+    }
+
+    window.location.href = TARGET_URL;
+  }
+
+  var remaining = SECONDS;
+  var timer = null;
+
+  // หยุดนับ และแช่แถบความคืบหน้าไว้ตรงที่มันอยู่ (ไม่ให้วิ่งต่อ)
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+    bar.style.transition = "none";
+  }
+
+  function render() {
+    countdown.innerHTML =
+      "จะพาไปเว็บไซต์ใหม่อัตโนมัติใน <b>" + remaining + "</b> วินาที";
+    bar.style.transform = "scaleX(" + ((SECONDS - remaining) / SECONDS) + ")";
+  }
+
+  // กดเองได้ทันที ไม่ต้องรอครบ 5 วิ — ปล่อยให้ลิงก์ทำงานเองตามปกติ
+  // (target="_top" พาไปทั้งหน้าได้แม้ข้ามโดเมน ซึ่งชัวร์กว่าสั่งด้วย JS)
+  // แค่หยุดตัวนับไว้ กันไม่ให้ยิงซ้ำระหว่างหน้ากำลังโหลด
+  goNow.addEventListener("click", stop);
+  link.addEventListener("click", stop);
+
+  if (SECONDS > 0) {
+    cancelBtn.hidden = false;
+    cancelBtn.addEventListener("click", function () {
+      stop();
+      bar.style.transform = "scaleX(0)";
+      cancelBtn.hidden = true;
+      countdown.textContent = "ยกเลิกแล้ว — กดปุ่มด้านบนเพื่อไปเว็บไซต์ใหม่";
+    });
+
+    render();
+    timer = setInterval(function () {
+      remaining -= 1;
+      if (remaining <= 0) {
+        stop();
+        countdown.textContent = "กำลังพาไปเว็บไซต์ใหม่…";
+        redirect();
+        return;
+      }
+      render();
+    }, 1000);
+  } else {
+    redirect();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!--
+  ===========================================================================
+  โค้ดสำหรับ "เว็บเก่า" — ก๊อปทั้งก้อนนี้ไปวางก่อน </body> ของหน้าเว็บเก่า
+  (ถ้าเว็บเก่ามีหลายหน้าและมีไฟล์ footer/template ร่วมกัน วางในไฟล์นั้นที่เดียวพอ)
+
+  มันจะเปิด popup ที่ข้างในเป็น iframe ชี้ไปที่ redirect/index.html
+  ซึ่งเป็นหน้าที่บอกว่า "ย้ายเว็บแล้ว" + นับถอยหลัง 5 วินาที
+
+  แก้ค่า 2 บรรทัดในส่วน ตั้งค่า ด้านล่างให้ตรงกับของจริงก่อนใช้งาน
+  ===========================================================================
+-->
+
+<div id="site-moved-popup" hidden>
+  <div id="site-moved-backdrop"></div>
+  <div id="site-moved-dialog" role="dialog" aria-modal="true"
+       aria-label="ประกาศย้ายเว็บไซต์">
+    <iframe id="site-moved-frame" title="ประกาศย้ายเว็บไซต์"
+            src="about:blank" frameborder="0"></iframe>
+  </div>
+</div>
+
+<style>
+  #site-moved-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;   /* ทับทุกอย่างในเว็บเก่า */
+  }
+  #site-moved-popup[hidden] { display: none; }
+  #site-moved-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(9, 18, 30, 0.6);
+  }
+  #site-moved-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(520px, calc(100vw - 32px));
+    height: min(420px, calc(100vh - 32px));
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  }
+  #site-moved-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---- ตั้งค่า ---------------------------------------------------------- */
+  // ที่อยู่ของหน้า popup (ไฟล์ redirect/index.html ที่อัปโหลดขึ้นเว็บเก่า)
+  var POPUP_SRC = "/redirect/index.html";
+  // เว็บใหม่ ต้องตรงกับใน redirect/index.html
+  var NEW_URL   = "http://agg2.egat.co.th/";
+  /* ---------------------------------------------------------------------- */
+
+  var popup = document.getElementById("site-moved-popup");
+  var frame = document.getElementById("site-moved-frame");
+  if (!popup || !frame) { return; }
+
+  // โหลด iframe ตอนจะเปิดจริง เพื่อไม่ให้นับถอยหลังเดินตั้งแต่ยังไม่เห็น
+  frame.src = POPUP_SRC;
+  popup.hidden = false;
+  document.documentElement.style.overflow = "hidden";  // ล็อกไม่ให้เลื่อนหลัง popup
+
+  // iframe อยู่คนละโดเมนก็ยังสั่งเปลี่ยนหน้าได้ ผ่าน postMessage
+  // (ไม่เชื่อ url ที่ส่งมาใน message — ใช้ NEW_URL ที่ตั้งไว้ข้างบนเสมอ)
+  window.addEventListener("message", function (ev) {
+    if (!ev.data || ev.data.type !== "site-moved-redirect") { return; }
+    if (ev.source !== frame.contentWindow) { return; }
+    window.location.href = NEW_URL;
+  });
+})();
+</script>
