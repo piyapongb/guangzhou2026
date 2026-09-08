@@ -1,15 +1,48 @@
 <!--
   ===========================================================================
-  โค้ดสำหรับ "เว็บเก่า" — ก๊อปทั้งก้อนนี้ไปวางก่อน </body> ของหน้าเว็บเก่า
-  (ถ้าเว็บเก่ามีหลายหน้าและมีไฟล์ footer/template ร่วมกัน วางในไฟล์นั้นที่เดียวพอ)
+  โค้ดฝั่ง "เว็บเก่า" — เป็นของเสริม ไม่ใส่ก็ใช้งานได้ (แต่ใส่แล้วดีกว่ามาก)
 
-  มันจะเปิด popup ที่ข้างในเป็น iframe ชี้ไปที่ redirect/index.html
-  ซึ่งเป็นหน้าที่บอกว่า "ย้ายเว็บแล้ว" + นับถอยหลัง 5 วินาที
+  ในไฟล์นี้มี 2 ก้อน เลือกใช้ตามสถานการณ์:
 
-  แก้ค่า 2 บรรทัดในส่วน ตั้งค่า ด้านล่างให้ตรงกับของจริงก่อนใช้งาน
+    ก้อน A — เว็บเก่ามี iframe popup อยู่แล้ว (แค่เอา URL ไปใส่)
+             ใส่ก้อน A เพื่อให้ "เด้งอัตโนมัติหลัง 5 วิ" ทำงานได้จริง
+             แม้ไฟล์ index.html จะอยู่คนละเครื่อง (เช่น 192.168.1.8)
+             ยาว 10 บรรทัด วางที่เดียวจบ
+
+    ก้อน B — เว็บเก่ายังไม่มี popup ต้องการให้สร้าง popup ให้ด้วย
+             ใส่ก้อน B ก้อนเดียว (มีตัวรับของก้อน A รวมอยู่ในนั้นแล้ว)
+
+  ทั้งสองก้อนวางก่อน </body> ของเว็บเก่า ถ้าเว็บเก่ามีไฟล์ footer/template
+  ที่ทุกหน้าเรียกใช้ร่วมกัน วางในไฟล์นั้นไฟล์เดียวพอ
   ===========================================================================
 -->
 
+
+<!-- =========================================================================
+     ก้อน A — ตัวรับสัญญาณจากหน้า popup (ใช้กับ popup ที่มีอยู่แล้ว)
+     ========================================================================= -->
+<script>
+(function () {
+  "use strict";
+  // ต้องตรงกับ TARGET_URL ใน index.html
+  var NEW_URL = "http://agg2.egat.co.th/";
+
+  // หน้า popup จะส่ง message มาบอกเมื่อนับถอยหลังครบ เว็บเก่าเป็นคนพาไปเอง
+  // จึงไม่ติดข้อจำกัดเรื่องคนละโดเมน (ไม่เชื่อ url ที่ส่งมาใน message —
+  // ใช้ NEW_URL ที่ตั้งไว้ข้างบนเสมอ)
+  window.addEventListener("message", function (ev) {
+    if (!ev.data || ev.data.type !== "site-moved-redirect") { return; }
+    window.location.href = NEW_URL;
+  });
+})();
+</script>
+
+
+<!-- =========================================================================
+     ก้อน B — popup พร้อม iframe (ใช้เมื่อเว็บเก่ายังไม่มี popup)
+     ถ้าใช้ก้อน B แล้ว ไม่ต้องใส่ก้อน A อีก
+     ========================================================================= -->
+<!--
 <div id="site-moved-popup" hidden>
   <div id="site-moved-backdrop"></div>
   <div id="site-moved-dialog" role="dialog" aria-modal="true"
@@ -23,7 +56,7 @@
   #site-moved-popup {
     position: fixed;
     inset: 0;
-    z-index: 2147483000;   /* ทับทุกอย่างในเว็บเก่า */
+    z-index: 2147483000;
   }
   #site-moved-popup[hidden] { display: none; }
   #site-moved-backdrop {
@@ -55,24 +88,19 @@
 (function () {
   "use strict";
 
-  /* ---- ตั้งค่า ---------------------------------------------------------- */
-  // ที่อยู่ของหน้า popup (ไฟล์ redirect/index.html ที่อัปโหลดขึ้นเว็บเก่า)
-  var POPUP_SRC = "/redirect/index.html";
-  // เว็บใหม่ ต้องตรงกับใน redirect/index.html
+  // ที่อยู่ของหน้า popup — ใส่ URL เต็มได้ถ้าอยู่คนละเครื่อง
+  var POPUP_SRC = "http://192.168.1.8/index.html";
+  // เว็บใหม่ ต้องตรงกับ TARGET_URL ใน index.html
   var NEW_URL   = "http://agg2.egat.co.th/";
-  /* ---------------------------------------------------------------------- */
 
   var popup = document.getElementById("site-moved-popup");
   var frame = document.getElementById("site-moved-frame");
   if (!popup || !frame) { return; }
 
-  // โหลด iframe ตอนจะเปิดจริง เพื่อไม่ให้นับถอยหลังเดินตั้งแต่ยังไม่เห็น
   frame.src = POPUP_SRC;
   popup.hidden = false;
-  document.documentElement.style.overflow = "hidden";  // ล็อกไม่ให้เลื่อนหลัง popup
+  document.documentElement.style.overflow = "hidden";
 
-  // iframe อยู่คนละโดเมนก็ยังสั่งเปลี่ยนหน้าได้ ผ่าน postMessage
-  // (ไม่เชื่อ url ที่ส่งมาใน message — ใช้ NEW_URL ที่ตั้งไว้ข้างบนเสมอ)
   window.addEventListener("message", function (ev) {
     if (!ev.data || ev.data.type !== "site-moved-redirect") { return; }
     if (ev.source !== frame.contentWindow) { return; }
@@ -80,3 +108,4 @@
   });
 })();
 </script>
+-->

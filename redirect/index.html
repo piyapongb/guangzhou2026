@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<!--
+  ===========================================================================
+  หน้าแจ้งย้ายเว็บ + นับถอยหลังไปเว็บใหม่อัตโนมัติ
+
+  ไฟล์เดียวจบ ไม่ต้องมีไฟล์อื่นประกอบ ไม่ต้องต่อเน็ต ไม่มี library
+  เอาไปวางไว้ที่ไหนก็ได้ เช่น  http://192.168.1.8/index.html
+  แล้วเอา URL นั้นไปใส่เป็น src ของ iframe popup ในเว็บเก่า
+
+  แก้ค่าที่ต้องแก้ได้ในส่วน "ตั้งค่าได้ตรงนี้" ท้ายไฟล์ (บรรทัดที่ขึ้นต้นด้วย var)
+  ===========================================================================
+-->
 <html lang="th">
 <head>
 <meta charset="utf-8">
@@ -13,6 +24,8 @@
     --brand: #0b63c5;
     --brand-dark: #084a95;
     --border: #dde5ef;
+    --warn: #8a5a00;
+    --warn-bg: #fff6e5;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -72,6 +85,11 @@
     cursor: pointer;
   }
   .btn:hover { background: var(--brand-dark); }
+  .btn.is-urgent { animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(11, 99, 197, 0.45); }
+    50%      { box-shadow: 0 0 0 10px rgba(11, 99, 197, 0); }
+  }
   .countdown {
     margin-top: 14px;
     font-size: 14px;
@@ -79,6 +97,12 @@
     min-height: 20px;
   }
   .countdown b { color: var(--brand-dark); font-size: 16px; }
+  .countdown.is-warn {
+    color: var(--warn);
+    background: var(--warn-bg);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
   .cancel {
     display: block;
     margin: 6px auto 0;
@@ -114,6 +138,7 @@
     :root {
       --bg: #131a24; --fg: #eaf1f8; --muted: #a5b4c6;
       --brand: #4d9df0; --brand-dark: #7bb8f5; --border: #2a3542;
+      --warn: #ffcc73; --warn-bg: #3a2f18;
     }
     .icon { background: #1c2836; }
     .newurl { background: #1a2430; }
@@ -149,20 +174,31 @@
 (function () {
   "use strict";
 
-  /* ---- ตั้งค่าได้ตรงนี้ ------------------------------------------------ */
-  var TARGET_URL = "http://agg2.egat.co.th/";  // เว็บใหม่ที่จะวิ่งไป
-  var SECONDS    = 5;                          // นับถอยหลังกี่วินาที
-  /* --------------------------------------------------------------------- */
+  /* ======================= ตั้งค่าได้ตรงนี้ =============================== */
 
-  // เว็บเก่าส่งค่ามาทาง query string ก็ได้ (ไม่ส่งก็ใช้ค่าด้านบน) เช่น
-  //   redirect/index.html?url=https://example.com&sec=8
+  // เว็บใหม่ที่จะพาไป
+  var TARGET_URL = "http://agg2.egat.co.th/";
+
+  // นับถอยหลังกี่วินาทีก่อนไปเอง (ใส่ 0 = ไปทันที)
+  var SECONDS = 5;
+
+  // ถ้าเบราว์เซอร์บล็อกการเปลี่ยนหน้าอัตโนมัติ (เกิดตอนไฟล์นี้อยู่คนละเครื่อง
+  // กับเว็บเก่า เช่นวางไว้ที่ 192.168.1.8 แต่เว็บเก่าอยู่อีกที่) จะให้ทำอะไรต่อ
+  //   "button"  = ขึ้นข้อความบอกให้กดปุ่มเอง  (แนะนำ — ผู้ใช้ไม่งง)
+  //   "inframe" = โหลดเว็บใหม่ในกรอบ popup นี้เลย (auto แต่เว็บใหม่จะอยู่ในกรอบเล็ก)
+  var ON_BLOCKED = "button";
+
+  /* ====================================================================== */
+
+  // เว็บเก่าจะส่งค่ามาทาง query string แทนการแก้ไฟล์นี้ก็ได้ เช่น
+  //   http://192.168.1.8/index.html?url=https://example.com&sec=8
   try {
     var qs = new URLSearchParams(window.location.search);
     var qUrl = qs.get("url");
     var qSec = parseInt(qs.get("sec"), 10);
     if (qUrl && /^https?:\/\//i.test(qUrl)) { TARGET_URL = qUrl; }
     if (!isNaN(qSec) && qSec >= 0 && qSec <= 60) { SECONDS = qSec; }
-  } catch (e) { /* เบราว์เซอร์เก่ามาก — ใช้ค่า default */ }
+  } catch (e) { /* เบราว์เซอร์เก่ามาก — ใช้ค่าที่ตั้งไว้ข้างบน */ }
 
   var link      = document.getElementById("newUrlLink");
   var goNow     = document.getElementById("goNow");
@@ -174,31 +210,59 @@
   link.textContent = TARGET_URL;
   goNow.href = TARGET_URL;
 
-  // พาทั้งหน้าไปเว็บใหม่ ไม่ใช่แค่ในกรอบ iframe — ไล่ลองทีละวิธี:
-  //   1. postMessage บอกเว็บเก่าให้พาไปเอง (ใช้ได้แม้อยู่คนละโดเมน
-  //      ถ้าเว็บเก่าวาง embed-snippet.html ไว้ ซึ่งมีตัวรับ message อยู่แล้ว)
-  //   2. เขียน window.top ตรง ๆ (ใช้ได้เมื่ออยู่โดเมนเดียวกัน)
-  //   3. เปลี่ยนหน้าใน iframe ตัวเอง — อย่างน้อยผู้ใช้ก็เห็นเว็บใหม่ในกรอบ
-  // ส่วนลิงก์/ปุ่มที่ผู้ใช้กดเองมี target="_top" อยู่แล้ว จึงพาไปทั้งหน้าได้
-  // ตามปกติแม้ข้ามโดเมน
+  // อยู่ในกรอบ iframe หรือเปิดหน้านี้ตรง ๆ
+  var inFrame;
+  try { inFrame = (window.top !== window.self); } catch (e) { inFrame = true; }
+
+  var blockedTimer = null;
+
+  // พาทั้งหน้า (ไม่ใช่แค่ในกรอบ) ไปเว็บใหม่ — ไล่ลองทีละวิธี
+  //   1. postMessage บอกเว็บเก่าให้พาไปเอง — ใช้ได้แม้อยู่คนละเครื่อง
+  //      แต่เว็บเก่าต้องมีตัวรับ (ดู embed-snippet.html) ถ้าไม่มีก็ไม่พัง เงียบไป
+  //   2. สั่ง window.top ตรง ๆ — ได้ผลเมื่อไฟล์นี้อยู่โดเมนเดียวกับเว็บเก่า
+  //      ถ้าคนละโดเมน เบราว์เซอร์จะบล็อกแบบ "เงียบ ๆ" ไม่ throw ให้จับ
+  //      จึงต้องใช้วิธีตั้งเวลาเช็กว่าหน้านี้ยังอยู่ไหม (ข้อ 3)
+  //   3. ยังอยู่ = โดนบล็อก → ทำตามค่า ON_BLOCKED
   function redirect() {
-    var inFrame = false;
-    try { inFrame = window.top !== window.self; } catch (e) { inFrame = true; }
-
-    if (inFrame) {
-      try {
-        window.parent.postMessage(
-          { type: "site-moved-redirect", url: TARGET_URL }, "*"
-        );
-      } catch (e) { /* ไม่เป็นไร ลองวิธีถัดไป */ }
-
-      try {
-        window.top.location.href = TARGET_URL;
-        return;
-      } catch (e) { /* cross-origin — ตกไปใช้ fallback ข้างล่าง */ }
+    if (!inFrame) {              // เปิดหน้านี้ตรง ๆ ไม่มีข้อจำกัดอะไร
+      window.location.href = TARGET_URL;
+      return;
     }
 
-    window.location.href = TARGET_URL;
+    try {
+      window.parent.postMessage(
+        { type: "site-moved-redirect", url: TARGET_URL }, "*"
+      );
+    } catch (e) { /* ไม่เป็นไร ลองวิธีถัดไป */ }
+
+    try {
+      window.top.location.href = TARGET_URL;
+    } catch (e) { /* คนละโดเมน — ถือว่าโดนบล็อก */ }
+
+    blockedTimer = setTimeout(onBlocked, 1500);
+    // ถ้าเปลี่ยนหน้าสำเร็จ หน้านี้จะถูกทิ้งก่อน 1.5 วิ — ยกเลิกตัวจับเวลาซะ
+    window.addEventListener("pagehide", clearBlockedTimer);
+    window.addEventListener("beforeunload", clearBlockedTimer);
+  }
+
+  function clearBlockedTimer() {
+    if (blockedTimer) { clearTimeout(blockedTimer); blockedTimer = null; }
+  }
+
+  function onBlocked() {
+    blockedTimer = null;
+
+    if (ON_BLOCKED === "inframe") {
+      window.location.href = TARGET_URL;   // โหลดเว็บใหม่ในกรอบนี้
+      return;
+    }
+
+    countdown.className = "countdown is-warn";
+    countdown.textContent =
+      "เบราว์เซอร์ไม่อนุญาตให้เปลี่ยนหน้าอัตโนมัติจากในกรอบนี้ " +
+      "กรุณากดปุ่ม “ไปเว็บไซต์ใหม่ตอนนี้” ด้านบน";
+    goNow.className = "btn is-urgent";
+    try { goNow.focus(); } catch (e) { /* ไม่สำคัญ */ }
   }
 
   var remaining = SECONDS;
@@ -217,17 +281,19 @@
   }
 
   // กดเองได้ทันที ไม่ต้องรอครบ 5 วิ — ปล่อยให้ลิงก์ทำงานเองตามปกติ
-  // (target="_top" พาไปทั้งหน้าได้แม้ข้ามโดเมน ซึ่งชัวร์กว่าสั่งด้วย JS)
-  // แค่หยุดตัวนับไว้ กันไม่ให้ยิงซ้ำระหว่างหน้ากำลังโหลด
-  goNow.addEventListener("click", stop);
-  link.addEventListener("click", stop);
+  // (target="_top" + คนกดเอง = เบราว์เซอร์ยอมให้พาไปทั้งหน้าแม้คนละโดเมน
+  //  ซึ่งชัวร์กว่าสั่งด้วย JS มาก จึงไม่ดัก preventDefault ตรงนี้)
+  goNow.addEventListener("click", function () { stop(); clearBlockedTimer(); });
+  link.addEventListener("click",  function () { stop(); clearBlockedTimer(); });
 
   if (SECONDS > 0) {
     cancelBtn.hidden = false;
     cancelBtn.addEventListener("click", function () {
       stop();
+      clearBlockedTimer();
       bar.style.transform = "scaleX(0)";
       cancelBtn.hidden = true;
+      countdown.className = "countdown";
       countdown.textContent = "ยกเลิกแล้ว — กดปุ่มด้านบนเพื่อไปเว็บไซต์ใหม่";
     });
 
@@ -236,6 +302,7 @@
       remaining -= 1;
       if (remaining <= 0) {
         stop();
+        cancelBtn.hidden = true;
         countdown.textContent = "กำลังพาไปเว็บไซต์ใหม่…";
         redirect();
         return;
@@ -243,6 +310,7 @@
       render();
     }, 1000);
   } else {
+    cancelBtn.hidden = true;
     redirect();
   }
 })();
