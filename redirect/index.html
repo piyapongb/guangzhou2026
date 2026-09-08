@@ -11,7 +11,9 @@
   รองรับ popup ทั้งสองแบบ: แบบ iframe ในหน้า และแบบเปิดหน้าต่างใหม่
   ด้วย window.open
 
-  แก้ค่าที่ต้องแก้ได้ในส่วน "ตั้งค่าได้ตรงนี้" ท้ายไฟล์ (บรรทัดที่ขึ้นต้นด้วย var)
+  จุดที่แก้เองบ่อย มี 2 ที่ ทั้งคู่มีกรอบ ==== ล้อมไว้ให้หาง่าย
+    1. หน้าตา/ขนาด  → "ปรับหน้าตาได้ตรงนี้" ในส่วน <style> ข้างล่างนี้
+    2. ปลายทาง/เวลา → "ตั้งค่าได้ตรงนี้" ในส่วน <script> ท้ายไฟล์
   ===========================================================================
 -->
 <html lang="th">
@@ -21,6 +23,34 @@
 <meta name="robots" content="noindex">
 <title>เว็บไซต์ย้ายไปที่อยู่ใหม่</title>
 <style>
+  /* ==================== ปรับหน้าตาได้ตรงนี้ ==============================
+     แก้แค่ตัวเลขในบล็อกนี้พอ ไม่ต้องไปยุ่งกับ CSS ข้างล่าง
+     ทุกค่ามีหน่วยกำกับ (px) อย่าลืมใส่ px ด้วยตอนแก้
+     ====================================================================== */
+  :root {
+    /* ความกว้างของกล่องเนื้อหา — ค่าเดิมคือ 460px */
+    --card-width: 760px;
+
+    /* ระยะขอบรอบกล่อง เขียนเป็น "บน-ล่าง  ซ้าย-ขวา" */
+    --page-padding: 28px 24px;
+
+    /* ขนาดตัวอักษรส่วนต่าง ๆ */
+    --title-size: 22px;   /* หัวข้อใหญ่ */
+    --text-size:  16px;   /* คำอธิบาย */
+    --url-size:   16px;   /* กล่อง URL เว็บใหม่ */
+    --btn-size:   17px;   /* ตัวหนังสือบนปุ่ม */
+
+    /* ขนาดปุ่ม เขียนเป็น "บน-ล่าง  ซ้าย-ขวา" */
+    --btn-padding: 13px 26px;
+
+    /* วงกลมไอคอนลูกศรด้านบน — ใส่ 0px ถ้าไม่อยากให้มีไอคอน */
+    --icon-size: 56px;
+
+    /* ความมนของมุมกล่อง/ปุ่ม */
+    --radius: 8px;
+  }
+
+  /* สีทั้งหมด (โหมดสว่าง) — โหมดมืดอยู่ท้ายส่วน <style> */
   :root {
     --bg: #ffffff;
     --fg: #12263f;
@@ -31,6 +61,8 @@
     --warn: #8a5a00;
     --warn-bg: #fff6e5;
   }
+  /* ================== จบส่วนที่ปรับเองได้ =============================== */
+
   * { box-sizing: border-box; }
   html, body {
     margin: 0;
@@ -46,29 +78,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px 20px;
-    text-align: center;
+    padding: var(--page-padding);
+    text-align: center;   /* เปลี่ยนเป็น left ได้ถ้าอยากให้ชิดซ้าย */
   }
-  .card { max-width: 460px; width: 100%; }
+  /* กล่องเนื้อหา — กว้างเท่า --card-width แต่ไม่เกินความกว้างของ popup
+     ที่เว็บเก่าตั้งไว้ ถ้าขยายแล้วยังดูแคบ ให้ไปเพิ่ม width ของ iframe
+     ในเว็บเก่าด้วย ไม่งั้นกล่องจะชนขอบ popup ก่อนถึงค่านี้ */
+  .card { max-width: var(--card-width); width: 100%; }
   .icon {
-    width: 56px; height: 56px;
+    width: var(--icon-size);
+    height: var(--icon-size);
     margin: 0 auto 16px;
     border-radius: 50%;
     background: #e8f1fc;
     color: var(--brand);
     display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
   }
-  .icon svg { width: 28px; height: 28px; }
-  h1 { font-size: 20px; line-height: 1.4; margin: 0 0 10px; }
-  p { margin: 0 0 8px; font-size: 15px; line-height: 1.6; color: var(--muted); }
+  .icon svg { width: 50%; height: 50%; }
+  .card h1, .card h2, .card h3 {
+    font-size: var(--title-size);
+    line-height: 1.4;
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+  p {
+    margin: 0 0 8px;
+    font-size: var(--text-size);
+    line-height: 1.6;
+    color: var(--muted);
+  }
   .newurl {
     display: block;
     margin: 14px 0 18px;
-    padding: 10px 12px;
+    padding: 12px 14px;
     background: #f5f8fc;
     border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 15px;
+    border-radius: var(--radius);
+    font-size: var(--url-size);
     color: var(--brand-dark);
     word-break: break-all;
     text-decoration: none;
@@ -77,12 +124,12 @@
   .newurl:hover { background: #eaf2fb; }
   .btn {
     display: inline-block;
-    padding: 12px 22px;
+    padding: var(--btn-padding);
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius);
     background: var(--brand);
     color: #fff;
-    font-size: 16px;
+    font-size: var(--btn-size);
     font-weight: 700;
     font-family: inherit;
     text-decoration: none;
@@ -104,7 +151,7 @@
   .countdown.is-warn {
     color: var(--warn);
     background: var(--warn-bg);
-    border-radius: 8px;
+    border-radius: var(--radius);
     padding: 8px 10px;
   }
   .cancel {
@@ -160,7 +207,7 @@
       </svg>
     </div>
 
-    <h1>เราย้ายเว็บไซต์ไปที่อยู่ใหม่แล้ว</h1>
+    <h3>เพื่อให้เป็นไปตามมาตรการความมั่นคงปลอดภัยด้านไซเบอร์ของ กฟผ.</h3>
     <p>เว็บไซต์นี้ได้ย้ายไปยังที่อยู่ใหม่ กรุณาใช้ลิงก์ด้านล่างแทน</p>
 
     <a class="newurl" id="newUrlLink" href="#" target="_top" rel="noopener">&hellip;</a>
@@ -184,7 +231,7 @@
   var TARGET_URL = "http://agg2.egat.co.th/";
 
   // นับถอยหลังกี่วินาทีก่อนไปเอง (ใส่ 0 = ไปทันที)
-  var SECONDS = 5;
+  var SECONDS = 10;
 
   // ถ้าเบราว์เซอร์บล็อกการเปลี่ยนหน้าอัตโนมัติ (เกิดตอนไฟล์นี้อยู่คนละเครื่อง
   // กับเว็บเก่า เช่นวางไว้ที่ 192.168.1.8 แต่เว็บเก่าอยู่อีกที่) จะให้ทำอะไรต่อ
@@ -305,7 +352,7 @@
     bar.style.transform = "scaleX(" + ((SECONDS - remaining) / SECONDS) + ")";
   }
 
-  // กดเองได้ทันที ไม่ต้องรอครบ 5 วิ — ปล่อยให้ลิงก์ทำงานเองตามปกติ
+  // กดเองได้ทันที ไม่ต้องรอครบเวลา — ปล่อยให้ลิงก์ทำงานเองตามปกติ
   // (target="_top" + คนกดเอง = เบราว์เซอร์ยอมให้พาไปทั้งหน้าแม้คนละโดเมน
   //  ซึ่งชัวร์กว่าสั่งด้วย JS มาก จึงไม่ดัก preventDefault ตรงนี้)
   goNow.addEventListener("click", function () { stop(); clearBlockedTimer(); });
