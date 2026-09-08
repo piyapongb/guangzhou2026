@@ -5,7 +5,11 @@
 
   ไฟล์เดียวจบ ไม่ต้องมีไฟล์อื่นประกอบ ไม่ต้องต่อเน็ต ไม่มี library
   เอาไปวางไว้ที่ไหนก็ได้ เช่น  http://192.168.1.8/index.html
-  แล้วเอา URL นั้นไปใส่เป็น src ของ iframe popup ในเว็บเก่า
+  หรือวางบนเว็บเก่าเองเป็น /moved.html (แนะนำ — ดู README)
+  แล้วเอา URL นั้นไปใส่ใน popup module ของเว็บเก่า
+
+  รองรับ popup ทั้งสองแบบ: แบบ iframe ในหน้า และแบบเปิดหน้าต่างใหม่
+  ด้วย window.open
 
   แก้ค่าที่ต้องแก้ได้ในส่วน "ตั้งค่าได้ตรงนี้" ท้ายไฟล์ (บรรทัดที่ขึ้นต้นด้วย var)
   ===========================================================================
@@ -210,9 +214,15 @@
   link.textContent = TARGET_URL;
   goNow.href = TARGET_URL;
 
-  // อยู่ในกรอบ iframe หรือเปิดหน้านี้ตรง ๆ
+  // หน้านี้ถูกเปิดมาแบบไหน — อยู่ในกรอบ iframe / เป็นหน้าต่าง popup ที่ถูก
+  // window.open ขึ้นมา / หรือเปิดตรง ๆ
   var inFrame;
   try { inFrame = (window.top !== window.self); } catch (e) { inFrame = true; }
+
+  var opener = null;
+  try {
+    if (window.opener && !window.opener.closed) { opener = window.opener; }
+  } catch (e) { opener = null; }
 
   var blockedTimer = null;
 
@@ -224,7 +234,22 @@
   //      จึงต้องใช้วิธีตั้งเวลาเช็กว่าหน้านี้ยังอยู่ไหม (ข้อ 3)
   //   3. ยังอยู่ = โดนบล็อก → ทำตามค่า ON_BLOCKED
   function redirect() {
-    if (!inFrame) {              // เปิดหน้านี้ตรง ๆ ไม่มีข้อจำกัดอะไร
+    if (!inFrame) {
+      // popup module บางตัวไม่ได้ใช้ iframe แต่เปิดเป็น "หน้าต่างใหม่"
+      // ด้วย window.open — กรณีนี้พาหน้าต่างแม่ (เว็บเก่า) ไปเว็บใหม่
+      // แล้วปิดหน้าต่าง popup นี้ทิ้ง
+      if (opener) {
+        try {
+          opener.location.href = TARGET_URL;
+          opener.focus();
+        } catch (e) { /* ทำไม่ได้ ก็ปล่อยให้ตกไปพาหน้าต่างนี้ไปแทน */ }
+        try { window.close(); } catch (e) { /* บางเบราว์เซอร์ไม่ยอมให้ปิด */ }
+        // ปิดไม่สำเร็จ (ยังอยู่) → อย่างน้อยพาหน้าต่างนี้ไปเว็บใหม่
+        setTimeout(function () { window.location.href = TARGET_URL; }, 1200);
+        return;
+      }
+
+      // เปิดหน้านี้ตรง ๆ ไม่มีข้อจำกัดอะไร
       window.location.href = TARGET_URL;
       return;
     }
@@ -285,6 +310,14 @@
   //  ซึ่งชัวร์กว่าสั่งด้วย JS มาก จึงไม่ดัก preventDefault ตรงนี้)
   goNow.addEventListener("click", function () { stop(); clearBlockedTimer(); });
   link.addEventListener("click",  function () { stop(); clearBlockedTimer(); });
+
+  // ยกเว้นตอนเป็นหน้าต่าง popup แยก — target="_top" จะพาแค่หน้าต่างเล็กนี้ไป
+  // ทิ้งเว็บเก่าค้างอยู่ในหน้าต่างแม่ จึงต้องดักเองให้พาหน้าต่างแม่ไปแทน
+  if (!inFrame && opener) {
+    var openerClick = function (ev) { ev.preventDefault(); redirect(); };
+    goNow.addEventListener("click", openerClick);
+    link.addEventListener("click", openerClick);
+  }
 
   if (SECONDS > 0) {
     cancelBtn.hidden = false;
